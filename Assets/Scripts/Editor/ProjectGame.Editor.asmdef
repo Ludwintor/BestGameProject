@@ -1,0 +1,20 @@
+{
+    "name": "ProjectGame.Editor",
+    "rootNamespace": "ProjectGame.Editor",
+    "references": [
+        "GUID:bead1b94131a835408f24453dbad6a9c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

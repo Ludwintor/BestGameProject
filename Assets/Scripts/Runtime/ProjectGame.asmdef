@@ -1,0 +1,18 @@
+{
+    "name": "ProjectGame",
+    "rootNamespace": "ProjectGame",
+    "references": [
+        "GUID:41c5d8621957b154dbdb006d11a75b13"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
