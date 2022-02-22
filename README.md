@@ -1,6 +1,4 @@
-<base target="_blank" style="text-decoration:none;">
-
-# CardRoguelikeCrawler
+<h1 align="center">CardRoguelikeCrawler</h1>
 <p align="center">
   <a href="https://github.com/Ludwintor/CardRoguelikeCrawler/issues">
     <img src="https://img.shields.io/github/issues/Ludwintor/CardRoguelikeCrawler?color=purple&style=for-the-badge" /></a>
