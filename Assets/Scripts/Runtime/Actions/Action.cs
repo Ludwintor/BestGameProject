@@ -29,12 +29,12 @@ namespace ProjectGame.Actions
         public virtual void OnStart() { }
 
         /// <summary>
-        /// Вызывается один раз, когда данный <see cref="Action"/> закончил выполнение
+        /// Вызывается один раз после вызова <see cref="Done"/>
         /// </summary>
         protected virtual void OnDone() { }
 
         /// <summary>
-        /// Завершить выполнение <see cref="Action"/>. Следующий кадр будет использовать другой <see cref="Action"/>
+        /// Завершить выполнение данного <see cref="Action"/>.
         /// </summary>
         protected void Done()
         {

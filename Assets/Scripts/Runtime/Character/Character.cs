@@ -9,7 +9,7 @@ namespace ProjectGame
     {
         public void TakeDamage(DamageInfo info)
         {
-            Debug.Log($"Damage received: {info.Damage}");
+            Debug.Log($"Received {info.Damage} damage");
         }
     }
 }
