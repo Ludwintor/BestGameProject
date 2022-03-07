@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectGame.Effects
 {
-    [CreateAssetMenu(fileName = "New Damage Single Effect", menuName = "Game/Effects/Damage/DamageSingleEffect")]
+    [CreateAssetMenu(fileName = "New DamageSingleEffect", menuName = "Game/Effects/Damage/DamageSingle")]
     public class DamageSingleEffect : EffectData
     {
         [SerializeField] private int _baseDamage;

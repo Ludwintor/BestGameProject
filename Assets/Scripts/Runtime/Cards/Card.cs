@@ -4,18 +4,24 @@ namespace ProjectGame.Cards
 {
     public class Card
     {
+        public CardView View => _view;
         public int TimesUpgraded => _timesUpgraded;
         public bool IsUpgraded => _timesUpgraded > 0;
 
         public Character Owner { get; set; }
 
         private CardData _data;
+        private CardView _view;
+
         private int _timesUpgraded;
 
-        public Card(CardData data)
+        public Card(CardData data, CardView view)
         {
             _data = data;
+            _view = view;
             _timesUpgraded = 0;
+            _view.Init(this);
+            UpdateVisual();
         }
 
         public void Use(Character source, Character target)
@@ -28,6 +34,9 @@ namespace ProjectGame.Cards
 
         public void UpdateVisual(Character target = null)
         {
+            _view.UpdateName(_data.Name);
+            _view.UpdateImage(_data.ForegroundImage);
+            _view.UpdateCost(_data.BaseCost.ToString());
             UpdateDescription(target);
         }
 
@@ -49,7 +58,7 @@ namespace ProjectGame.Cards
                 if (description.Contains(key))
                     description = description.Replace(key, effect.GetMiscValue(_timesUpgraded).ToString());
             }
-            // TODO: Вызывать метод у визуализатора карты и передавать уже готовое описание
+            _view.UpdateDescription(description);
         }
     }
 }
