@@ -2,21 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundButton : MonoBehaviour
-{
-    /* // Start is called before the first frame update
-    void Start()
+namespace ProjectGame
+{ 
+    public class SoundButton : MonoBehaviour
     {
-        
-    }
+        public GameObject SoundSettings;
+        public void onClick()
+        {
+            SoundSettings.SetActive(true);
+            gameObject.SetActive(false);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }*/
-    public void onClick()
-    {
-        UnityEngine.Debug.Log("клик");
+        }
     }
 }
