@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Cards Anim.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/DemoGame/Persistant.unity
+    guid: c1ec859d163d066429023529ab7634b3
+  - enabled: 1
+    path: Assets/Scenes/DemoGame/Menu.unity
+    guid: 0528bafd991fa69479e5ec7a14807784
+  - enabled: 1
+    path: Assets/Scenes/DemoGame/Game.unity
+    guid: 6b5f5eaf352769f44885df0965594b8d
   m_configObjects: {}
