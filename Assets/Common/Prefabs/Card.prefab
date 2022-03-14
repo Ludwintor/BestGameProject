@@ -492,6 +492,7 @@ GameObject:
   - component: {fileID: 790575635946384462}
   - component: {fileID: 4337788334791238505}
   - component: {fileID: 5270822972008933159}
+  - component: {fileID: 1942942612069653648}
   m_Layer: 5
   m_Name: CostBackground
   m_TagString: Untagged
@@ -557,6 +558,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1942942612069653648
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082513353690679098}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4187837102762969316
 GameObject:
   m_ObjectHideFlags: 0
