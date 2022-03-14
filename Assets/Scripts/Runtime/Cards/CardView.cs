@@ -86,46 +86,29 @@ namespace ProjectGame.Cards
         public void UpdateCost(string cost) => _costText.SetText(cost);
         public void UpdateImage(Sprite sprite) => _image.sprite = sprite;
 
-        public void Move(Vector2 position)
+        public void Move(Vector2 position, float duration)
         {
-            // No sense in tweening if positions are equal
-            // also avoiding "divison by zero" in recalculation of speed based tween
-            if (position.Equals(_rectTransform.localPosition))
-            {
-                _moveTween?.Pause();
-                return;
-            }
-            float speed = 1000f * UnityEngine.Random.Range(0.7f, 1.3f);
             if (_moveTween.IsActive())
-                _moveTween.ChangeEndValue(position, speed, true).Play();
+                _moveTween.ChangeEndValue(position, duration, true).Play();
             else
-                _moveTween = _rectTransform.DOLocalMove(position, speed).SetSpeedBased(true)
-                                           .SetAutoKill(false);
+                _moveTween = _rectTransform.DOLocalMove(position, duration).SetAutoKill(false);
         }
 
-        public void Rotate(float angle)
+        public void Rotate(float angle, float duration)
         {
             Vector3 rotation = new Vector3(0f, 0f, angle);
             if (_rotateTween.IsActive())
-                _rotateTween.ChangeEndValue(rotation, true).Play();
+                _rotateTween.ChangeEndValue(rotation, duration, true).Play();
             else
-                _rotateTween = _rectTransform.DOLocalRotate(rotation, 0.1f).SetAutoKill(false);
+                _rotateTween = _rectTransform.DOLocalRotate(rotation, duration).SetAutoKill(false);
         }
 
-        public void Hover()
+        public void Scale(float scale, float duration)
         {
             if (_scaleTween.IsActive())
-                _scaleTween.ChangeEndValue(Vector3.one * 1.5f, true).Play();
+                _scaleTween.ChangeEndValue(Vector3.one * scale, duration, true).Play();
             else
-                _scaleTween = _rectTransform.DOScale(Vector3.one * 1.5f, 0.2f).SetAutoKill(false);
-        }
-
-        public void Unhover()
-        {
-            if (_scaleTween.IsActive())
-                _scaleTween.ChangeEndValue(Vector3.one, true).Play();
-            else
-                _scaleTween = _rectTransform.DOScale(Vector3.one, 0.2f).SetAutoKill(false);
+                _scaleTween = _rectTransform.DOScale(Vector3.one * scale, duration).SetAutoKill(false);
         }
 
         public void AllowInteraction()
