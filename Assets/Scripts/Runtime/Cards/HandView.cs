@@ -8,6 +8,7 @@ namespace ProjectGame.Cards
     public class HandView : MonoBehaviour
     {
         [SerializeField] private RectTransform _container;
+        [Header("Card Alignment")]
         [SerializeField] private float _gapBetweenCards;
         [SerializeField] private float _initialSink;
         [SerializeField] private float _sinkPerCard;
@@ -15,6 +16,13 @@ namespace ProjectGame.Cards
         [SerializeField] private float _hoverPush;
         [SerializeField, Range(0f, 1f)] private float _pushFactor;
         [SerializeField] private float _hoveredSink;
+        [Header("Card Movement")]
+        [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _minMoveDuration;
+        [SerializeField] private float _maxMoveDuration;
+        [SerializeField] private float _rotationDuration;
+        [SerializeField] private float _hoverScale;
+        [SerializeField] private float _scaleDuration;
 
         private List<CardView> _views = new List<CardView>();
         private Card _dragged;
@@ -89,8 +97,15 @@ namespace ProjectGame.Cards
                 }
                 int hoveredOffset = i - hoveredIndex;
                 Vector2 push = hoveredIndex != -1 ? new Vector2(CalculateHoverPush(hoveredOffset), 0f) : Vector2.zero;
-                cardView.Move(position + push);
-                cardView.Rotate(angle);
+                Vector2 newPosition = position + push;
+                float distance = Vector2.Distance(cardView.transform.localPosition, newPosition);
+                if (distance != 0)
+                {
+                    float duration = distance / _moveSpeed;
+                    duration = Mathf.Clamp(duration, 0.1f, _maxMoveDuration);
+                    cardView.Move(newPosition, duration);
+                }
+                cardView.Rotate(angle, _rotationDuration);
             }
 
             _hovered?.View.transform.SetAsLastSibling();
@@ -134,7 +149,7 @@ namespace ProjectGame.Cards
             card.View.OnMoved += card.View.AllowInteraction;
             card.View.CanHover = false;
             card.View.CanDrag = false;
-            card.View.Unhover();
+            card.View.Scale(1f, _scaleDuration);
             _hovered = null;
             _dragged = null;
             foreach (CardView view in _views)
@@ -152,11 +167,11 @@ namespace ProjectGame.Cards
             if (isHovered)
             {
                 _hovered = card;
-                _hovered.View.Hover();
+                _hovered.View.Scale(_hoverScale, _scaleDuration);
             }
             else if (!card.View.IsDragged)
             {
-                _hovered?.View.Unhover();
+                _hovered?.View.Scale(1f, _scaleDuration);
                 _hovered = null;
             }
             AlignCards();
