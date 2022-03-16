@@ -284,6 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _width: 7
-  _height: 6
-  _expectedRoomCount: 14
-  _seed: 132235
+  _height: 15
+  _density: 7
+  _maxStart: 3
+  _maxAncestorDepth: 4
+  _seed: 9289
