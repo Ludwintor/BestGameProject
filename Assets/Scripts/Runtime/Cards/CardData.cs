@@ -8,7 +8,7 @@ namespace ProjectGame.Cards
     {
         private const string DESCRIPTION_TOOLTIP = "For dynamic values use !XY!, where X - 0-based effect index" +
                                                    "\nY - Dynamic value type." +
-                                                   "\nAvailable types: A - Damage, B - Defence, M - Misc Value" +
+                                                   "\nAvailable types: D - Damage, B - Block, M - Misc Value" +
                                                    "\nex: Deal !0A! damage";
 
         public string Id => _id;
@@ -17,6 +17,7 @@ namespace ProjectGame.Cards
         public Sprite ForegroundImage => _foregroundImage;
         public int BaseCost => _baseCost;
         public int UpgradedCost => _upgradedCost;
+        public bool NeedTarget => _needTarget;
         public EffectData[] Effects => _effects;
 
         [SerializeField] private string _id;
@@ -25,6 +26,28 @@ namespace ProjectGame.Cards
         [SerializeField] private Sprite _foregroundImage;
         [SerializeField] private int _baseCost;
         [SerializeField] private int _upgradedCost;
+        [SerializeField] private bool _needTarget;
         [SerializeField] private EffectData[] _effects;
+
+        public string GetDescription(int timesUpgraded, Character target)
+        {
+            // TODO: Добавить вычисление динамических переменных
+            // в зависимости от статов держателя карты и наведённой цели
+            string description = RawDescription;
+            for (int i = 0; i < Effects.Length; i++)
+            {
+                EffectData effect = Effects[i];
+                string key = $"!{i}D!";
+                if (description.Contains(key))
+                    description = description.Replace(key, effect.GetDamage(timesUpgraded).ToString());
+                key = $"!{i}B!";
+                if (description.Contains(key))
+                    description = description.Replace(key, effect.GetBlock(timesUpgraded).ToString());
+                key = $"!{i}M!";
+                if (description.Contains(key))
+                    description = description.Replace(key, effect.GetMiscValue(timesUpgraded).ToString());
+            }
+            return description;
+        }
     }
 }
