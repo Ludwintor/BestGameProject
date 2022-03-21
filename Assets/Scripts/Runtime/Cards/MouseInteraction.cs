@@ -15,6 +15,9 @@ namespace ProjectGame.Cards
         public event Action<PointerEventData> PointerEnter;
         public event Action<PointerEventData> PointerExit;
 
+        public bool Interactable { get => _canvasGroup.blocksRaycasts; set => _canvasGroup.blocksRaycasts = value; }
+        public bool IsDragged => _dragging;
+
         private bool _dragging;
         private CanvasGroup _canvasGroup;
 
@@ -43,6 +46,8 @@ namespace ProjectGame.Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (!_dragging)
+                return;
             _dragging = false;
             _canvasGroup.blocksRaycasts = true;
             DragEnded?.Invoke(eventData);
@@ -55,6 +60,8 @@ namespace ProjectGame.Cards
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (_dragging)
+                return;
             PointerExit?.Invoke(eventData);
         }
     }

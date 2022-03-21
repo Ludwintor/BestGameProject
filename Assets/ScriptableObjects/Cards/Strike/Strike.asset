@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: strike
   _name: Strike
-  _rawDescription: Deal !0A! damage
+  _rawDescription: Deal !0D! damage
   _foregroundImage: {fileID: 21300000, guid: 17f37c3220a86dc4db41754c9609f82a, type: 3}
   _baseCost: 1
   _upgradedCost: 0
+  _needTarget: 1
   _effects:
   - {fileID: 11400000, guid: 5b5d34249f59c4547909db4a8f69e864, type: 2}

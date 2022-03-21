@@ -19,14 +19,9 @@ namespace ProjectGame.Cards
         public event Action<Card> DragEnd;
         public event Action<Card, bool> Hovered;
 
-        public bool IsDragged => _dragged == this;
-        public bool IsHovered => _hovered == this;
-        public TweenCallback OnMoved { get => _moveTween?.onComplete; set => _moveTween.onComplete = value; }
-        public bool CanHover { get; set; } = true;
-        public bool CanDrag { get; set; } = true;
-
-        private static CardView _dragged;
-        private static CardView _hovered;
+        public bool IsDragged => _interaction.IsDragged;
+        public bool CanRegainInteraction { get; set; }
+        public bool Interactable { get => _interaction.Interactable; set => _interaction.Interactable = value; }
 
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
@@ -79,6 +74,7 @@ namespace ProjectGame.Cards
         public void Init(Card card)
         {
             _card = card;
+            Interactable = true;
         }
 
         public void UpdateName(string name) => _nameText.SetText(name);
@@ -86,12 +82,15 @@ namespace ProjectGame.Cards
         public void UpdateCost(string cost) => _costText.SetText(cost);
         public void UpdateImage(Sprite sprite) => _image.sprite = sprite;
 
+        public void StopDrag() => _interaction.StopDrag();
+
         public void Move(Vector2 position, float duration)
         {
             if (_moveTween.IsActive())
                 _moveTween.ChangeEndValue(position, duration, true).Play();
             else
-                _moveTween = _rectTransform.DOLocalMove(position, duration).SetAutoKill(false);
+                _moveTween = _rectTransform.DOLocalMove(position, duration)
+                                           .OnComplete(RegainInteraction).SetAutoKill(false);
         }
 
         public void Rotate(float angle, float duration)
@@ -111,51 +110,38 @@ namespace ProjectGame.Cards
                 _scaleTween = _rectTransform.DOScale(Vector3.one * scale, duration).SetAutoKill(false);
         }
 
-        public void AllowInteraction()
+        private void RegainInteraction()
         {
-            CanHover = true;
-            CanDrag = true;
+            if (!CanRegainInteraction)
+                return;
+            Interactable = true;
         }
 
         #region Mouse Interaction Events
         private void OnDragStarted(PointerEventData eventData)
         {
-            if (!CanDrag)
-                return;
-            _dragged = this;
             _moveTween.Pause();
             DragStart?.Invoke(_card);
         }
 
         private void OnDrag(PointerEventData eventData)
         {
-            if (!IsDragged)
-                return;
             _rectTransform.position = _uiManager.ScreenToWorld(Input.mousePosition);
             Dragging?.Invoke(_card);
         }
 
         private void OnDragEnded(PointerEventData eventData)
         {
-            if (!CanDrag)
-                return;
-            _dragged = null;
             DragEnd?.Invoke(_card);
         }
 
         private void OnPointerEnter(PointerEventData eventData)
         {
-            if (!CanHover)
-                return;
-            _hovered = this;
             Hovered?.Invoke(_card, true);
         }
 
         private void OnPointerExit(PointerEventData eventData)
         {
-            if (IsDragged || !IsHovered)
-                return;
-            _hovered = null;
             Hovered?.Invoke(_card, false);
         }
         #endregion

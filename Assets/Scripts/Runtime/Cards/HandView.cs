@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,11 @@ namespace ProjectGame.Cards
         [SerializeField] private float _rotationDuration;
         [SerializeField] private float _hoverScale;
         [SerializeField] private float _scaleDuration;
+
+        public Card Dragged => _dragged;
+        public Card Hovered => _hovered;
+        public event Action<Card> CardLeftHand;
+        public event Action<Card> CardEnterHand;
 
         private List<CardView> _views = new List<CardView>();
         private Card _dragged;
@@ -65,8 +71,23 @@ namespace ProjectGame.Cards
             cardView.Dragging -= OnCardDragging;
             cardView.DragEnd -= OnCardDragEnd;
             cardView.Hovered -= OnCardHovered;
+            if (_hovered?.View == cardView)
+            {
+                _hovered = null;
+                _dragged = null;
+            }
             _views.Remove(cardView);
+            ResetСards();
             AlignCards();
+        }
+
+        public void ReturnCard(Card card)
+        {
+            if (_dragged.View == card.View)
+            {
+                card.View.StopDrag();
+                OnCardDragEnd(card);
+            }
         }
 
         public void AlignCards()
@@ -125,6 +146,14 @@ namespace ProjectGame.Cards
             return hoveredOffset < 0 ? -push : push;
         }
 
+        private void ResetСards()
+        {
+            _hovered = null;
+            _dragged = null;
+            foreach (CardView view in _views)
+                view.Interactable = true;
+        }
+
         private void OnCardDragStart(Card card)
         {
             _dragged = card;
@@ -132,9 +161,8 @@ namespace ProjectGame.Cards
             {
                 if (card.View == view)
                     continue;
-                view.OnMoved = null;
-                view.CanDrag = false;
-                view.CanHover = false;
+                view.CanRegainInteraction = false;
+                view.Interactable = false;
             }
             AlignCards();
         }
@@ -146,19 +174,10 @@ namespace ProjectGame.Cards
 
         private void OnCardDragEnd(Card card)
         {
-            card.View.OnMoved += card.View.AllowInteraction;
-            card.View.CanHover = false;
-            card.View.CanDrag = false;
+            ResetСards();
+            card.View.CanRegainInteraction = true;
+            card.View.Interactable = false;
             card.View.Scale(1f, _scaleDuration);
-            _hovered = null;
-            _dragged = null;
-            foreach (CardView view in _views)
-            {
-                if (card.View == view)
-                    continue;
-                view.CanDrag = true;
-                view.CanHover = true;
-            }
             AlignCards();
         }
 
@@ -181,15 +200,14 @@ namespace ProjectGame.Cards
         {
             if (_dragged == null)
                 return;
-
+            CardEnterHand?.Invoke(_dragged);
         }
 
         private void OnHandExit(PointerEventData eventData)
         {
             if (_dragged == null)
                 return;
-
-            // TODO: Передавать карту для проверки всяких параметров, для последующего использования этой карты
+            CardLeftHand?.Invoke(_dragged);
         }
 
 #if UNITY_EDITOR

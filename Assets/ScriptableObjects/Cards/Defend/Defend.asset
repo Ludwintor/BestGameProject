@@ -16,7 +16,8 @@ MonoBehaviour:
   _name: Defend
   _rawDescription: Gain !0B! block
   _foregroundImage: {fileID: 21300000, guid: c99f29060463be541a4389d92d659d61, type: 3}
-  _baseCost: 1
-  _upgradedCost: 1
+  _baseCost: 0
+  _upgradedCost: 0
+  _needTarget: 0
   _effects:
   - {fileID: 11400000, guid: 2291655a780194944913dd060d9fb89c, type: 2}
