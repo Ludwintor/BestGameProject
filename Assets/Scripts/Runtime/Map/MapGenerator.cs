@@ -48,6 +48,7 @@ namespace ProjectGame.DungeonMap
             {
                 RoomNode lastNode = map.GetNode(map.Columns / 2, map.Rows - 1);
                 node.ChildrenNodes.Add(lastNode);
+                lastNode.ParentNodes.Add(node);
                 return;
             }
 

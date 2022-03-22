@@ -8,6 +8,8 @@ namespace ProjectGame.DungeonMap
         public Vector2Int Position { get; }
         public List<RoomNode> ChildrenNodes { get; }
         public List<RoomNode> ParentNodes { get; }
+        
+        public RoomType Type { get; set; }
 
         public bool HasConnection => ChildrenNodes.Count > 0 || ParentNodes.Count > 0;
         
