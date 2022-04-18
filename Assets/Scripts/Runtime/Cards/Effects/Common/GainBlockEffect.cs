@@ -1,5 +1,6 @@
 using ProjectGame.Actions;
 using ProjectGame.Cards;
+using ProjectGame.Characters;
 using UnityEngine;
 
 namespace ProjectGame.Effects

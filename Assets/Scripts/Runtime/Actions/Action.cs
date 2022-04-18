@@ -4,10 +4,9 @@ namespace ProjectGame.Actions
 {
     public abstract class Action
     {
-        public float Duration => _duration;
         public bool IsDone => _isDone;
 
-        private float _duration;
+        protected float Duration;
         private bool _isDone;
 
         public Action() : this(0f) { }
@@ -15,7 +14,7 @@ namespace ProjectGame.Actions
         public Action(float duration)
         {
             _isDone = false;
-            _duration = duration;
+            Duration = duration;
         }
 
         /// <summary>
@@ -51,9 +50,12 @@ namespace ProjectGame.Actions
         /// </summary>
         protected void TickDuration()
         {
-            _duration -= Time.deltaTime;
-            if (_duration <= 0f)
+            Duration -= Time.deltaTime;
+            if (Duration <= 0f)
                 Done();
         }
+
+        protected void AddToTop(Action action) => Game.GetSystem<ActionManager>().AddToTop(action);
+        protected void AddToBottom(Action action) => Game.GetSystem<ActionManager>().AddToBottom(action);
     }
 }

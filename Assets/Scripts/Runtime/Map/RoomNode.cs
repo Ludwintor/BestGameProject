@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using ProjectGame.Characters;
 using UnityEngine;
 
 namespace ProjectGame.DungeonMap
@@ -8,11 +10,12 @@ namespace ProjectGame.DungeonMap
         public Vector2Int Position { get; }
         public List<RoomNode> ChildrenNodes { get; }
         public List<RoomNode> ParentNodes { get; }
-        
         public RoomData Data { get; set; }
-
         public bool HasConnection => ChildrenNodes.Count > 0 || ParentNodes.Count > 0;
-        
+        public ReadOnlyCollection<Enemy> Enemies => _enemies.AsReadOnly();
+
+        private List<Enemy> _enemies;
+
         public RoomNode(int x, int y)
         {
             Position = new Vector2Int(x, y);

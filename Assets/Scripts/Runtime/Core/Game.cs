@@ -1,5 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using ProjectGame.Cards;
+using ProjectGame.DungeonMap;
+using ProjectGame.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +9,26 @@ namespace ProjectGame
 {
     public class Game : MonoBehaviour
     {
+        private const string MAP_DATA_PATH = "MapData";
+
+        public static Dungeon Dungeon => _dungeon;
+        public static ObjectPool<CardView> CardsPool => _cardsPool;
+
         private static Dictionary<Type, ISystem> _systems = new Dictionary<Type, ISystem>();
+        private static Dungeon _dungeon;
+        private static ObjectPool<CardView> _cardsPool;
+
+        [SerializeField] private CardView _cardPrefab;
+
+        private void Start()
+        {
+            _cardsPool = new ObjectPool<CardView>(() => Instantiate(_cardPrefab, null),
+                                                  view => view.Deactivate(),
+                                                  view => Destroy(view.gameObject));
+        }
 
         /// <summary>
-        /// Добавляет систему в реестр. В 99% случаев вызывать всегда в <c>Awake()</c><para>
+        /// Add system in dictionary that can be accessable globally
         /// </summary>
         public static void RegisterSystem(ISystem system)
         {
@@ -22,13 +40,20 @@ namespace ProjectGame
             }
             _systems.Add(systemType, system);
         }
-        
+
         /// <summary>
-        /// Достаёт систему из реестра
+        /// Access certain system
         /// </summary>
         public static T GetSystem<T>() where T : ISystem
         {
             return (T)_systems[typeof(T)];
+        }
+
+        public static void StartGame()
+        {
+            MapData[] mapData = Resources.LoadAll<MapData>(MAP_DATA_PATH);
+            _dungeon = new Dungeon();
+            _dungeon.GenerateDungeon(mapData[0]);
         }
     }
 }

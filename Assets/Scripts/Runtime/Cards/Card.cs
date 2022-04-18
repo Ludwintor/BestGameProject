@@ -1,11 +1,12 @@
-﻿using ProjectGame.Effects;
+﻿using ProjectGame.Characters;
+using ProjectGame.Effects;
 
 namespace ProjectGame.Cards
 {
     public class Card
     {
-        public CardView View => _view;
-        public string Name => _data.Name;
+        public CardView View { get; set; }
+        public string Name => _data.RawName;
         public int TimesUpgraded => _timesUpgraded;
         public bool IsUpgraded => _timesUpgraded > 0;
         public bool NeedTarget => _data.NeedTarget;
@@ -14,17 +15,13 @@ namespace ProjectGame.Cards
         public Character Owner { get; set; }
 
         private CardData _data;
-        private CardView _view;
 
         private int _timesUpgraded;
 
-        public Card(CardData data, CardView view)
+        public Card(CardData data)
         {
             _data = data;
-            _view = view;
             _timesUpgraded = 0;
-            _view.Init(this);
-            UpdateVisual();
         }
 
         public void Use(Character source, Character target)
@@ -37,10 +34,10 @@ namespace ProjectGame.Cards
 
         public void UpdateVisual(Character target = null)
         {
-            _view.UpdateName(_data.Name);
-            _view.UpdateImage(_data.ForegroundImage);
-            _view.UpdateCost(_data.BaseCost.ToString());
-            _view.UpdateDescription(_data.GetDescription(TimesUpgraded, target));
+            View.UpdateName(_data.GetName(_timesUpgraded));
+            View.UpdateImage(_data.ForegroundImage);
+            View.UpdateCost(Cost.ToString());
+            View.UpdateDescription(_data.GetDescription(_timesUpgraded, target));
         }
     }
 }

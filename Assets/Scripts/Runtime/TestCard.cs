@@ -1,5 +1,7 @@
+using ProjectGame.Actions;
 using ProjectGame.Cards;
 using ProjectGame.Characters;
+using ProjectGame.DungeonMap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,58 +11,52 @@ namespace ProjectGame
 {
     public class TestCard : MonoBehaviour
     {
+        [Header("Cards")]
         [SerializeField] private List<CardData> _data;
-        [SerializeField] private CardView _prefab;
         [SerializeField] private HandView _handView;
+        [SerializeField] private DeckView _drawView;
+        [SerializeField] private DeckView _discardView;
         [SerializeField] private TargetingSystem _targetingSystem;
-        [SerializeField] private EnemyView _enemyView;
+        [Header("Enemy")]
+        [SerializeField] private EnemyData _enemyData;
+        [SerializeField] private EnemyView _enemyPrefab;
+        [SerializeField] private Transform _enemyStart;
+        [Header("Some UI")]
         [SerializeField] private Button _drawButton;
-        [SerializeField] private Button _removeButton;
-        [SerializeField] private Button _drawThreeButton;
         [SerializeField] private float _drawDelay;
 
         private Player _player;
         private Enemy _enemy;
-        private System.Random _rng;
+        private RNG _rng;
 
         private void Start()
         {
-            _rng = new System.Random();
-            Hand hand = new Hand(_handView);
-            _player = new Player(hand, _targetingSystem);
-            _enemy = new Enemy(_enemyView);
-            _drawButton.onClick.AddListener(AddCard);
-            _removeButton.onClick.AddListener(RemoveCard);
-            _drawThreeButton.onClick.AddListener(DrawThreeCards);
+            Game.StartGame();
+            _rng = new RNG();
+            _player = new Player(_targetingSystem);
+            _player.SetupViews(_handView, null, _drawView, _discardView);
+            _enemy = new Enemy(_enemyData);
+            EnemyView enemyView = Instantiate(_enemyPrefab, _enemyStart.position, Quaternion.identity);
+            enemyView.Init(_enemy);
+            Game.Dungeon.Enemies = new List<Enemy> { _enemy };
+            _drawButton.onClick.AddListener(DrawCard);
+            Game.Dungeon.InitPlayer(_player);
+            for (int i = 0; i < 10; i++)
+                AddCard();
+            Game.GetSystem<TurnManager>().StartTurn();
         }
 
         private void AddCard()
         {
-            CardView view = Instantiate(_prefab, null);
-            CardData randomData = _data[_rng.Next(_data.Count)];
-            Card card = new Card(randomData, view);
-            _player.Hand.Add(card);
+            CardData randomData = _data[_rng.NextInt(_data.Count)];
+            Card card = new Card(randomData);
+            _player.DrawDeck.Add(card);
         }
 
-        private void RemoveCard()
+        private void DrawCard()
         {
-            Card last = _player.Hand.RemoveLast();
-            Destroy(last.View.gameObject);
-        }
-
-        private void DrawThreeCards()
-        {
-            StartCoroutine(CardDrawing(3));
-        }
-
-        private IEnumerator CardDrawing(int count)
-        {
-            var delay = new WaitForSeconds(_drawDelay);
-            for (int i = 0; i < count; i++)
-            {
-                AddCard();
-                yield return delay;
-            }
+            ActionManager actionManager = Game.GetSystem<ActionManager>();
+            actionManager.AddToBottom(new DrawCardAction(_player, 0.2f, 1));
         }
     }
 }
