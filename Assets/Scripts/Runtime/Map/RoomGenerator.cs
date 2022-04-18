@@ -5,7 +5,7 @@ namespace ProjectGame.DungeonMap
 {
     public static class RoomGenerator
     {
-        public static void Generate(Map map, List<RoomData> roomTypes, Random rng)
+        public static void Generate(Map map, List<RoomData> roomTypes, RNG rng)
         {
             List<RoomNode> allRooms = GetAllRoomNodes(map);
             

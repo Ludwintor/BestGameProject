@@ -17,9 +17,9 @@ namespace ProjectGame
 
         public abstract bool CanSpawnInCell(Map map, RoomNode room, RoomData data);
 
-        public virtual bool SpawnInCell(Map map, RoomNode room,RoomData data, Random rng)
+        public virtual bool SpawnInCell(Map map, RoomNode room,RoomData data, RNG rng)
         {
-            return (CanSpawnInCell(map, room, data) && rng.Next(100) <= SpawnChance);
+            return CanSpawnInCell(map, room, data) && rng.NextInt(100) <= SpawnChance;
         }
     }
 }
