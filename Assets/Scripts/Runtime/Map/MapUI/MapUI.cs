@@ -25,19 +25,11 @@ namespace ProjectGame
             rectTransform.localScale = Vector3.one;
         }
 
-        private static Vector2 RandomOnUnitSphere(Random rng)
+        private static Vector2 RandomVectorInRange(RNG rng, float minRadius, float maxRadius)
         {
-            float angle = (float) rng.NextDouble() * 2 * Mathf.PI;
-            Vector2 vector = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            return vector;
-        }
-
-        private static Vector2 RandomVectorInRange(Random rng, float minRadius, float maxRadius)
-        {
-            Vector2 offset = RandomOnUnitSphere(rng);
-            double rngDouble = rng.NextDouble();
-            double radius = (rngDouble * (maxRadius - minRadius)) + minRadius;
-            return offset * (float)radius;
+            Vector2 offset = rng.OnUnitCircle();
+            float radius = rng.NextFloat(minRadius, maxRadius);
+            return offset * radius;
         }
 
         private Vector2 RoomPosition(RoomNode room, int xMax, int yMax)
@@ -52,7 +44,7 @@ namespace ProjectGame
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ySize);
         }
 
-        public void GenerateUI(Map map, Random rng)
+        public void GenerateUI(Map map, RNG rng)
         {
             _roomPositions = new Vector2[map.Columns, map.Rows];
             RectTransform mapParent = new GameObject("Map").AddComponent<RectTransform>();

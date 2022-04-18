@@ -31,8 +31,8 @@ namespace ProjectGame
         {
             Stopwatch timer = Stopwatch.StartNew();
 
-            Random rng = new Random(_seed);
-            _map = MapGenerator.GenerateMap(_height, _width, _density, _maxStart, _maxAncestorDepth, rng);
+            RNG rng = new RNG(_seed);
+            _map = MapGenerator.Generate(_height, _width, _density, _maxStart, _maxAncestorDepth, rng);
             RoomGenerator.Generate(_map, _rooms, rng);
 
             timer.Stop();
