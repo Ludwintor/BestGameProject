@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b554108308174040b1dd7e96c92d362, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 5405397178528234592, guid: bbd96c44f99049544b2d7eaf5a397a7e, type: 3}
+  _size: 300
+  _radius: 75
+  _spawnRules:
+  - {fileID: 11400000, guid: b68a9753057a2314f82d7c25f3d7c6ac, type: 2}
