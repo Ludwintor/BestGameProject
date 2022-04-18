@@ -9,7 +9,7 @@ namespace ProjectGame.DungeonMap
         public List<RoomNode> ChildrenNodes { get; }
         public List<RoomNode> ParentNodes { get; }
         
-        public RoomType Type { get; set; }
+        public RoomData Data { get; set; }
 
         public bool HasConnection => ChildrenNodes.Count > 0 || ParentNodes.Count > 0;
         
