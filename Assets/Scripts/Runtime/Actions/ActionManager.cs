@@ -26,8 +26,12 @@ namespace ProjectGame
             }
             else if (_actionQueue.Count > 0)
             {
-                _currentAction = NextAction();
-                _currentAction.OnStart();
+                // Execute all actions, that is done after OnStart, in one frame
+                do
+                {
+                    _currentAction = NextAction();
+                    _currentAction.OnStart();
+                } while (_currentAction.IsDone);
             }
         }
 

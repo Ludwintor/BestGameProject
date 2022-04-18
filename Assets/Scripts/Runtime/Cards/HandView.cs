@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -30,7 +28,7 @@ namespace ProjectGame.Cards
         public event Action<Card> CardLeftHand;
         public event Action<Card> CardEnterHand;
 
-        private List<CardView> _views = new List<CardView>();
+        private Hand _hand;
         private Card _dragged;
         private Card _hovered;
         private RectTransform _rectTransform;
@@ -54,36 +52,43 @@ namespace ProjectGame.Cards
             _interaction.PointerExit -= OnHandExit;
         }
 
-        public void AddView(CardView cardView)
+        public void Init(Hand hand)
         {
-            _views.Add(cardView);
+            _hand = hand;
+            hand.View = this;
+        }
+
+        public void AttachView(Card card)
+        {
+            CardView cardView = Game.CardsPool.Get();
+            cardView.Init(card);
+            card.View = cardView;
+            card.UpdateVisual();
+            cardView.gameObject.SetActive(true);
             cardView.transform.SetParent(_container, false);
             cardView.DragStart += OnCardDragStart;
             cardView.Dragging += OnCardDragging;
             cardView.DragEnd += OnCardDragEnd;
             cardView.Hovered += OnCardHovered;
-            AlignCards();
         }
 
-        public void RemoveView(CardView cardView)
+        public void DeattachView(Card card)
         {
+            CardView cardView = card.View;
             cardView.DragStart -= OnCardDragStart;
             cardView.Dragging -= OnCardDragging;
             cardView.DragEnd -= OnCardDragEnd;
             cardView.Hovered -= OnCardHovered;
-            if (_hovered?.View == cardView)
+            if (_hovered == card)
             {
                 _hovered = null;
                 _dragged = null;
             }
-            _views.Remove(cardView);
-            ResetÑards();
-            AlignCards();
         }
 
         public void ReturnCard(Card card)
         {
-            if (_dragged.View == card.View)
+            if (_dragged == card)
             {
                 card.View.StopDrag();
                 OnCardDragEnd(card);
@@ -92,16 +97,16 @@ namespace ProjectGame.Cards
 
         public void AlignCards()
         {
-            int count = _views.Count;
-            int hoveredIndex = _views.IndexOf(_hovered?.View);
+            int count = _hand.Count;
+            int hoveredIndex = _hand.Cards.IndexOf(_hovered);
             int middleIndex = count / 2; // 0 1 2 3 4     5 ----- 5/2=2 | -2 -1 0 -1 -2          0 1 2 3     4 -------- 4/2=2 | -2 -1 0 -1
             float gapFactor = count > 1 ? 1 - Mathf.Log(count - 1, 150) : 1;
             float finalGap = _gapBetweenCards * gapFactor;
             Vector2 position = (Vector2)_rectTransform.localPosition - new Vector2((count - 1) * finalGap / 2f + finalGap, 0f);
-            for (int i = 0; i < _views.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 position.x += finalGap;
-                CardView cardView = _views[i];
+                CardView cardView = _hand[i].View;
                 cardView.transform.SetSiblingIndex(i);
                 if (cardView.IsDragged)
                     continue;
@@ -132,6 +137,14 @@ namespace ProjectGame.Cards
             _hovered?.View.transform.SetAsLastSibling();
         }
 
+        public void ResetCards()
+        {
+            _hovered = null;
+            _dragged = null;
+            foreach (Card card in _hand.Cards)
+                card.View.Interactable = true;
+        }
+
         private float CalculateSink(int middleOffset)
         {
             middleOffset = -Mathf.Abs(middleOffset);
@@ -146,23 +159,15 @@ namespace ProjectGame.Cards
             return hoveredOffset < 0 ? -push : push;
         }
 
-        private void ResetÑards()
+        private void OnCardDragStart(Card draggedCard)
         {
-            _hovered = null;
-            _dragged = null;
-            foreach (CardView view in _views)
-                view.Interactable = true;
-        }
-
-        private void OnCardDragStart(Card card)
-        {
-            _dragged = card;
-            foreach (CardView view in _views)
+            _dragged = draggedCard;
+            foreach (Card card in _hand.Cards)
             {
-                if (card.View == view)
+                if (draggedCard == card)
                     continue;
-                view.CanRegainInteraction = false;
-                view.Interactable = false;
+                card.View.CanRegainInteraction = false;
+                card.View.Interactable = false;
             }
             AlignCards();
         }
@@ -174,7 +179,7 @@ namespace ProjectGame.Cards
 
         private void OnCardDragEnd(Card card)
         {
-            ResetÑards();
+            ResetCards();
             card.View.CanRegainInteraction = true;
             card.View.Interactable = false;
             card.View.Scale(1f, _scaleDuration);

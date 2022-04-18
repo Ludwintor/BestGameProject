@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &50366014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dad8912713f37844b4ff2e950667683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardPrefab: {fileID: 6866970746398992657, guid: 3732035216262e84c9121021fafc3af2, type: 3}
 --- !u!4 &1890199019
 Transform:
   m_ObjectHideFlags: 0

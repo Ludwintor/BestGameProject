@@ -84,13 +84,23 @@ namespace ProjectGame.Cards
 
         public void StopDrag() => _interaction.StopDrag();
 
-        public void Move(Vector2 position, float duration)
+        public void Deactivate()
+        {
+            _moveTween.Pause();
+            _rotateTween.Pause();
+            _scaleTween.Pause();
+            _rectTransform.rotation = Quaternion.identity;
+            _rectTransform.localScale = Vector3.one;
+            gameObject.SetActive(false);
+        }
+
+        public void Move(Vector2 position, float duration, TweenCallback onComplete = null)
         {
             if (_moveTween.IsActive())
                 _moveTween.ChangeEndValue(position, duration, true).Play();
             else
-                _moveTween = _rectTransform.DOLocalMove(position, duration)
-                                           .OnComplete(RegainInteraction).SetAutoKill(false);
+                _moveTween = _rectTransform.DOLocalMove(position, duration).SetAutoKill(false);
+            _moveTween.OnComplete(RegainInteraction + onComplete);
         }
 
         public void Rotate(float angle, float duration)

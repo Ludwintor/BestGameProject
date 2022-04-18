@@ -1,44 +1,42 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.ObjectModel;
 
 namespace ProjectGame.Cards
 {
     public class Hand
     {
-        public HandView View => _view;
+        public HandView View { get; set; }
+        public ReadOnlyCollection<Card> Cards => _cards.AsReadOnly();
         public bool IsFull => _cards.Count >= _maxCards;
+        public int Count => _cards.Count;
 
         private List<Card> _cards;
-        private HandView _view;
         private int _maxCards;
 
-        public Hand(HandView handView, int maxCards = 10)
+        public Hand()
         {
-            _view = handView;
-            _maxCards = maxCards;
-            _cards = new List<Card>(maxCards);
+            _cards = new List<Card>();
         }
 
         public void Add(Card card)
         {
             _cards.Add(card);
-            _view.AddView(card.View);
+            View.AttachView(card);
         }
 
         public void Remove(Card card)
         {
             _cards.Remove(card);
-            _view.RemoveView(card.View);
+            View.DeattachView(card);
         }
 
         public Card RemoveLast()
         {
             Card card = _cards[_cards.Count - 1];
-            _cards.RemoveAt(_cards.Count - 1);
-            _view.RemoveView(card.View);
+            Remove(card);
             return card;
         }
+
+        public Card this[int i] => _cards[i];
     }
 }

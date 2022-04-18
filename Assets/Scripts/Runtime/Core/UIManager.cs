@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProjectGame
 {
     public class UIManager : MonoBehaviour, ISystem
     {
-        [SerializeField]
-        private Canvas _uiCanvas;
+
+        [SerializeField] private Canvas _uiCanvas;
 
         private void Awake()
         {
