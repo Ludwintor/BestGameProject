@@ -1,4 +1,5 @@
 ﻿using ProjectGame.Characters;
+using ProjectGame.Powers;
 using UnityEngine;
 
 namespace ProjectGame.Actions
@@ -39,7 +40,12 @@ namespace ProjectGame.Actions
         public int ApplyPowers(Character target)
         {
             // TODO: Применять баффы и дебаффы к урону, должно расчитать уже финальный урон
-            return Damage;
+            int finalDamage = Damage;
+            foreach (Power power in Source.PowerGroup.Powers)
+                finalDamage = power.AtDamageInflict(finalDamage, this);
+            foreach (Power power in target.PowerGroup.Powers)
+                finalDamage = power.AtDamageReceive(finalDamage, this);
+            return finalDamage;
         }
     }
 }
