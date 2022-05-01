@@ -9,6 +9,16 @@ namespace ProjectGame.Characters
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _counter;
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void UpdateIntent(Sprite intentImage, string counter)
         {
             _image.sprite = intentImage;

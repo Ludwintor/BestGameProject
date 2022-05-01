@@ -36,7 +36,7 @@ namespace ProjectGame
             ActionManager actionManager = Game.GetSystem<ActionManager>();
             dungeon.Player.TriggerEndTurn(_turns);
             foreach (Enemy enemy in dungeon.Enemies)
-                enemy.TriggerEndTurn(_turns);
+                enemy.TriggerEndTurn(_turns); // TODO: Probably (99%) TriggerEndTurn must be called within EnemyTurnAction
             Debug.Log("Turn ended");
             actionManager.AddToBottom(new StartTurnAction(this));
         }

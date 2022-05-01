@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee105ad1ec89e34587115f75dadf2f6, type: 3}
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
+  _maxHealth: 50
+  _initialBlock: 0
   _intents:
   - {fileID: 11400000, guid: 1ca0c90e3143a01489b0bdc3bb595fb6, type: 2}

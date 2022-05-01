@@ -11,12 +11,9 @@ namespace ProjectGame
 {
     public class TestCard : MonoBehaviour
     {
-        [Header("Cards")]
-        [SerializeField] private List<CardData> _data;
-        [SerializeField] private HandView _handView;
-        [SerializeField] private DeckView _drawView;
-        [SerializeField] private DeckView _discardView;
-        [SerializeField] private TargetingSystem _targetingSystem;
+        [Header("Player")]
+        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private PlayerView _playerView;
         [Header("Enemy")]
         [SerializeField] private EnemyData _enemyData;
         [SerializeField] private EnemyView _enemyPrefab;
@@ -27,29 +24,30 @@ namespace ProjectGame
 
         private Player _player;
         private Enemy _enemy;
-        private RNG _rng;
 
         private void Start()
         {
             Game.StartGame();
-            _rng = new RNG();
-            _player = new Player(_targetingSystem);
-            _player.SetupViews(_handView, null, _drawView, _discardView);
+            // TODO: Transfer most part of this code to Game.StartGame()
+            PlayerUI playerUI = Game.GetSystem<UIManager>().PlayerUI;
+            _player = new Player(_playerData);
+            playerUI.Init(_player);
+            _playerView.Init(_player);
             _enemy = new Enemy(_enemyData);
             EnemyView enemyView = Instantiate(_enemyPrefab, _enemyStart.position, Quaternion.identity);
             enemyView.Init(_enemy);
             Game.Dungeon.Enemies = new List<Enemy> { _enemy };
             _drawButton.onClick.AddListener(DrawCard);
             Game.Dungeon.InitPlayer(_player);
-            for (int i = 0; i < 10; i++)
-                AddCard();
+            for (int i = 0; i < _playerData.StartingCards.Length; i++)
+                AddCard(_playerData.StartingCards[i]);
+            _player.DrawDeck.Shuffle();
             Game.GetSystem<TurnManager>().StartTurn();
         }
 
-        private void AddCard()
+        private void AddCard(CardData cardData)
         {
-            CardData randomData = _data[_rng.NextInt(_data.Count)];
-            Card card = new Card(randomData);
+            Card card = new Card(cardData);
             _player.DrawDeck.Add(card);
         }
 

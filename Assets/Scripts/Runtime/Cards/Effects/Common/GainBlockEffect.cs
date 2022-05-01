@@ -10,10 +10,11 @@ namespace ProjectGame.Effects
     {
         [SerializeField] private int _baseBlock;
         [SerializeField] private int _additionalBlockPerUpgrade;
+        [SerializeField] private bool _targetSelf;
 
         public override void Execute(Card card, Character source, Character target)
         {
-            AddToBottom(new GainBlockAction(target, GetBlock(card.TimesUpgraded), 0.2f));
+            AddToBottom(new GainBlockAction(_targetSelf ? source : target, GetBlock(card.TimesUpgraded)));
         }
 
         public override int GetBlock(int timesUpgraded)

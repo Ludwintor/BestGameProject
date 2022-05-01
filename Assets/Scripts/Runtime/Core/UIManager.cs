@@ -1,11 +1,14 @@
+using ProjectGame.Characters;
 using UnityEngine;
 
 namespace ProjectGame
 {
     public class UIManager : MonoBehaviour, ISystem
     {
+        public PlayerUI PlayerUI => _playerUI;
 
         [SerializeField] private Canvas _uiCanvas;
+        [SerializeField] private PlayerUI _playerUI;
 
         private void Awake()
         {

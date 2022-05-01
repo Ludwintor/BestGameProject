@@ -10,20 +10,21 @@ namespace ProjectGame.Actions
         private readonly Character _target;
         private readonly int _amount;
 
-        public GainBlockAction(Character target, int amount, float delay) : base(delay)
+        public GainBlockAction(Character target, int amount)
         {
             _target = target;
             _amount = amount;
         }
 
-        public override void Tick()
+        public override void OnStart()
         {
-            TickDuration();
+            _target.GainBlock(_amount);
+            Debug.Log($"Gained {_amount} block");
+            Done();
         }
 
-        protected override void OnDone()
+        public override void Tick()
         {
-            Debug.Log($"Gained {_amount} block");
         }
     }
 }
