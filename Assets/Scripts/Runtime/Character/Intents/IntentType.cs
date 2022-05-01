@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectGame
+namespace ProjectGame.Intents
 {
     [CreateAssetMenu(fileName = "New IntentType", menuName = "Game/Intents/Intent Type")]
     public class IntentType : ScriptableObject

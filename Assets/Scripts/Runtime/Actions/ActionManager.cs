@@ -31,7 +31,7 @@ namespace ProjectGame
                 {
                     _currentAction = NextAction();
                     _currentAction.OnStart();
-                } while (_currentAction.IsDone);
+                } while (_currentAction.IsDone && _actionQueue.Count > 0);
             }
         }
 

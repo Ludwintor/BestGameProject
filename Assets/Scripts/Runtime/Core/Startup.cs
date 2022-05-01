@@ -9,7 +9,14 @@ namespace ProjectGame
     {
         private void Start()
         {
-            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+            SceneManager.sceneLoaded += Loaded;
+            SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+        }
+
+        private void Loaded(Scene scene, LoadSceneMode mode)
+        {
+            SceneManager.SetActiveScene(scene);
+            SceneManager.sceneLoaded -= Loaded;
             Destroy(gameObject);
         }
     }

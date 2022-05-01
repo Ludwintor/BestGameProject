@@ -6,12 +6,13 @@ namespace ProjectGame.Characters
 {
     public class Enemy : Character
     {
-        public EnemyView View { get; set; }
+        public event System.Action<IntentData> IntentDetermined;
+        public IntentData CurrentIntent => _currentIntent;
 
         private EnemyData _data;
         private IntentData _currentIntent;
 
-        public Enemy(EnemyData data) : base()
+        public Enemy(EnemyData data) : base(data)
         {
             _data = data;
         }
@@ -19,7 +20,7 @@ namespace ProjectGame.Characters
         public override void TriggerStartTurn(int currentTurn)
         {
             _currentIntent = _data.DetermineIntent(this, null, currentTurn);
-            View.ShowIntent(_currentIntent, _currentIntent.GetValue(this));
+            IntentDetermined?.Invoke(_currentIntent);
         }
 
         public override void TriggerEndTurn(int currentTurn)
