@@ -24,7 +24,6 @@ namespace ProjectGame.Characters
             DrawDeck = new Deck();
             DiscardDeck = new Deck();
             _maxEnergy = data.BaseMaxEnergy;
-            _energy = _maxEnergy;
         }
 
         public bool CanUseCard(Card card)
