@@ -41,9 +41,9 @@ namespace ProjectGame.Actions
         {
             // TODO: Применять баффы и дебаффы к урону, должно расчитать уже финальный урон
             int finalDamage = Damage;
-            foreach (Power power in Source.PowerGroup.Powers)
+            foreach (Power power in Source.PowerGroup)
                 finalDamage = power.AtDamageInflict(finalDamage, this);
-            foreach (Power power in target.PowerGroup.Powers)
+            foreach (Power power in target.PowerGroup)
                 finalDamage = power.AtDamageReceive(finalDamage, this);
             return finalDamage;
         }

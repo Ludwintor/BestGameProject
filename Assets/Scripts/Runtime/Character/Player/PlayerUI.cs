@@ -30,7 +30,7 @@ namespace ProjectGame.Characters
             _targetingSystem.TargetSelected += OnTargetSelected;
             _targetingSystem.TargetingAborted += OnTargetingAborted;
             _player.EnergyChanged += UpdateEnergy;
-            _energyText.SetText(_player.Energy.ToString());
+            UpdateEnergy(_player.Energy, _player.MaxEnergy);
         }
 
         private void OnCardLeftHand(Card card)

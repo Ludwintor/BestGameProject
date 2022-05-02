@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935765461ce2c7f45b7ca3b0ebbb6eee, type: 3}
   m_Name: Strengthen
   m_EditorClassIdentifier: 
-  _id: 
-  _name: 
-  _rawDescription: 
+  _id: strengthen
+  _name: Strengthen
+  _rawDescription: Gain !0M! Strength
   _foregroundImage: {fileID: 0}
-  _baseCost: 0
-  _upgradedCost: 0
+  _baseCost: 1
+  _upgradedCost: 1
   _needTarget: 0
-  _effects: []
+  _effects:
+  - {fileID: 11400000, guid: a882ddf8b72ea4845ac304088a4bd16a, type: 2}
