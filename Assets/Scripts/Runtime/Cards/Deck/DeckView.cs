@@ -11,6 +11,7 @@ namespace ProjectGame.Cards
         public void Init(Deck deck)
         {
             deck.View = this;
+            UpdateCount(deck.Count);
         }
 
         public void UpdateCount(int cardsCount)

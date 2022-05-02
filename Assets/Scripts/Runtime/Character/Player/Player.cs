@@ -8,11 +8,12 @@ namespace ProjectGame.Characters
     public sealed class Player : Character
     {
         public event Action<int, int> EnergyChanged;
+        public int MaxEnergy => _maxEnergy;
+        public int Energy => _energy;
         public Hand Hand { get; }
         public Deck MasterDeck { get; }
         public Deck DrawDeck { get; }
         public Deck DiscardDeck { get; }
-        public int Energy => _energy;
 
         private int _maxEnergy;
         private int _energy;

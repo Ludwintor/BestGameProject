@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6652dcbd45286b4d9b7090d93332274, type: 3}
   m_Name: Strengthen ApplyPowerEffect
   m_EditorClassIdentifier: 
-  _powerToApply: {fileID: 0}
-  _basePowerStack: 0
-  _powerStackPerUpgrade: 0
-  _targetSelf: 0
+  _powerToApply: {fileID: 11400000, guid: 994c7b5a918c4d44fbe3ff286167a83d, type: 2}
+  _basePowerStack: 1
+  _powerStackPerUpgrade: 1
+  _targetSelf: 1

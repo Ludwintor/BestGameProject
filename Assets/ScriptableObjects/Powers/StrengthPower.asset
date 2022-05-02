@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082c986a1f74fea4abd27c5c83087729, type: 3}
   m_Name: StrengthPower
   m_EditorClassIdentifier: 
-  _id: 
-  _name: 
+  _id: strength
+  _name: Strength
   _icon: {fileID: 0}

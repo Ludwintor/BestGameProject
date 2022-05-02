@@ -39,7 +39,7 @@ namespace ProjectGame.Characters
             Health -= damage - blockedDamage;
             Health = Mathf.Clamp(Health, 0, MaxHealth);
             HealthChanged?.Invoke(Health, MaxHealth);
-            Debug.Log($"Character took {info.Damage} damage");
+            Debug.Log($"Character took {damage} damage");
         }
 
         public virtual void GainBlock(int block)

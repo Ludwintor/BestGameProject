@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProjectGame.Powers
 {
-    public class PowerGroup
+    public class PowerGroup : IEnumerable<Power>
     {
         public event System.Action<Power> PowerApplied;
         public event System.Action<Power> PowerRemoved;
@@ -64,6 +64,16 @@ namespace ProjectGame.Powers
         {
             _powers.Remove(power);
             PowerRemoved?.Invoke(power);
+        }
+
+        public IEnumerator<Power> GetEnumerator()
+        {
+            return _powers.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

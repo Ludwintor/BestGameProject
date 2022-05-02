@@ -63,8 +63,8 @@ namespace ProjectGame.Powers
         [SerializeField] private string _name;
         [SerializeField] private Sprite _icon;
 
-        public virtual int AtDamageInflict(int currentDamage, DamageInfo info, int stack) { return info.Damage; }
-        public virtual int AtDamageReceive(int currentDamage, DamageInfo info, int stack) { return info.Damage; }
+        public virtual int AtDamageInflict(int currentDamage, DamageInfo info, int stack) { return currentDamage; }
+        public virtual int AtDamageReceive(int currentDamage, DamageInfo info, int stack) { return currentDamage; }
         public virtual void AtTurnStart(int currentTurn) { }
         public virtual void AtTurnEnd(int currentTurn) { }
     }
