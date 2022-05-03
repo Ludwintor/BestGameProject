@@ -4,6 +4,7 @@ using ProjectGame.Actions;
 using ProjectGame.Cards;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ProjectGame.Characters
 {
@@ -16,6 +17,7 @@ namespace ProjectGame.Characters
         [SerializeField] private TargetingSystem _targetingSystem;
         [SerializeField] private TextMeshProUGUI _energyText;
         [SerializeField] private TextMeshProUGUI _healthText;
+        [SerializeField] private Image _uiHealthBar;
 
         private Player _player;
 
@@ -74,6 +76,8 @@ namespace ProjectGame.Characters
 
         private void UpdateHealth(int health, int maxHealth)
         {
+            float percent = (float)health / maxHealth;
+            _uiHealthBar.fillAmount = percent;
             _healthText.SetText($"HP: {health}/{maxHealth}");
         }
     }
