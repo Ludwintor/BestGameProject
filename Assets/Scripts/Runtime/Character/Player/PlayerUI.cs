@@ -33,7 +33,7 @@ namespace ProjectGame.Characters
             _player.EnergyChanged += UpdateEnergy;
             UpdateEnergy(_player.Energy, _player.MaxEnergy);
             _player.HealthChanged += UpdateHealth;
-            UpdateHealth(_player.Health, _player.MaxHealth);
+            UpdateHealth(_player.Health, _player.MaxHealth); 
         }
 
         private void OnCardLeftHand(Card card)
@@ -74,7 +74,7 @@ namespace ProjectGame.Characters
 
         private void UpdateHealth(int health, int maxHealth)
         {
-            _healthText.SetText($"{health}/{maxHealth}");
+            _healthText.SetText($"HP: {health}/{maxHealth}");
         }
     }
 }
