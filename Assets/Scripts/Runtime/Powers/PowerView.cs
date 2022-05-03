@@ -25,7 +25,6 @@ namespace ProjectGame.Powers
         {
             _powerBar.sprite = power.Data.Icon;
             _powerText.SetText(power.Stack.ToString());
-            Debug.Log("Power Stack:" + power.Stack);
         }
     }
 }
