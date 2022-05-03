@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ProjectGame.Powers;
 
 namespace ProjectGame.Characters
 {
@@ -6,6 +7,7 @@ namespace ProjectGame.Characters
     {
         [SerializeField] private Hitbox _hitbox;
         [SerializeField] private HealthView _healthBar;
+        [SerializeField] private PowerGroupView _powersView;
 
         protected void Init(Character character)
         {
@@ -14,6 +16,7 @@ namespace ProjectGame.Characters
             character.BlockChanged += UpdateBlock;
             UpdateHealth(character.Health, character.MaxHealth);
             UpdateBlock(character.Block);
+            _powersView.Init(character.PowerGroup);
         }
 
         protected void UpdateHealth(int current, int max)
@@ -25,6 +28,5 @@ namespace ProjectGame.Characters
         {
             _healthBar.UpdateBlock(current);
         }
-
     }
 }

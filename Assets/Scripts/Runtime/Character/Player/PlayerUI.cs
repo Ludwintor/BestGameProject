@@ -15,6 +15,7 @@ namespace ProjectGame.Characters
         [SerializeField] private HandView _handView;
         [SerializeField] private TargetingSystem _targetingSystem;
         [SerializeField] private TextMeshProUGUI _energyText;
+        [SerializeField] private TextMeshProUGUI _healthText;
 
         private Player _player;
 
@@ -31,6 +32,8 @@ namespace ProjectGame.Characters
             _targetingSystem.TargetingAborted += OnTargetingAborted;
             _player.EnergyChanged += UpdateEnergy;
             UpdateEnergy(_player.Energy, _player.MaxEnergy);
+            _player.HealthChanged += UpdateHealth;
+            UpdateHealth(_player.Health, _player.MaxHealth);
         }
 
         private void OnCardLeftHand(Card card)
@@ -67,6 +70,11 @@ namespace ProjectGame.Characters
         private void UpdateEnergy(int energy, int maxEnergy)
         {
             _energyText.SetText($"{energy}/{maxEnergy}");
+        }
+
+        private void UpdateHealth(int health, int maxHealth)
+        {
+            _healthText.SetText($"{health}/{maxHealth}");
         }
     }
 }
