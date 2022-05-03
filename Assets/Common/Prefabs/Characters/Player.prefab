@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2007615093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2007615094}
+  - component: {fileID: 2007615096}
+  - component: {fileID: 2007615095}
+  m_Layer: 0
+  m_Name: PowerGroupView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2007615094
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007615093}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -8.42704}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6233511509346527645}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0.00000047653, y: 1.5}
+  m_SizeDelta: {x: 17.256, y: 3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2007615096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007615093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 3, y: 100}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 5
+--- !u!114 &2007615095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007615093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 525bd9725f07ca241ac402c93ad7f2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _powers: []
+  _powerViewPrefab: {fileID: 1878841518, guid: 6ef129cf2bc89c343bbe0638876c8939, type: 3}
 --- !u!1 &357496591576443209
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitbox: {fileID: 3967792550110949744}
   _healthBar: {fileID: 4325379998421054722}
+  _powersView: {fileID: 2007615095}
 --- !u!1 &357496592571032490
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,13 +152,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2436841621195959740}
+  - {fileID: 2007615094}
   m_Father: {fileID: 357496591576443211}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.1484, y: 5.3365}
-  m_SizeDelta: {x: 17.2563, y: 17.3304}
+  m_AnchoredPosition: {x: 0.1484, y: 4.1449}
+  m_SizeDelta: {x: 17.2563, y: 19.7135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4196975463559720826
 Canvas:
@@ -331,11 +408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485386276373015819, guid: 07f82d4299049df42a7661973ed80602, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000037298
+      value: -0.00014962
       objectReference: {fileID: 0}
     - target: {fileID: 485386276373015819, guid: 07f82d4299049df42a7661973ed80602, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.4793997
+      value: 5.9
       objectReference: {fileID: 0}
     - target: {fileID: 485386276373015819, guid: 07f82d4299049df42a7661973ed80602, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
