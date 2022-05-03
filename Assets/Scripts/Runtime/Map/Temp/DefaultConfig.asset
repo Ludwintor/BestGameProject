@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17f1e6573327b942b526720a73c7ca7, type: 3}
+  m_Name: DefaultConfig
+  m_EditorClassIdentifier: 
+  _rows: 11
+  _columns: 5
+  _density: 10
+  _maxStartNodeCount: 3
+  _maxAncestorDepth: 4
+  _rooms:
+  - {fileID: 11400000, guid: a5c0b5f8039132349b5a64f3677e76b4, type: 2}
+  - {fileID: 11400000, guid: e63b8b913ed91c8448f37998d00f386d, type: 2}
+  - {fileID: 11400000, guid: a2e4d0ffc9120474bb468c53e409cc6b, type: 2}
+  - {fileID: 11400000, guid: cf216ea1470f9844aa8bea4c7d99795f, type: 2}
+  - {fileID: 11400000, guid: 2724a248a6b2f3d48b7c87dede10866f, type: 2}
+  - {fileID: 11400000, guid: e17dd62d231ff0e4092bb2a877797adb, type: 2}
+  - {fileID: 11400000, guid: 0f3f8eebf94b47e49a2a6fd2beba2bd9, type: 2}
+  _spawnRules:
+  - _affectedRows:
+    - min: 0
+      max: 10
+    _flagRoomType: 1
+    _spawnChance: 100
+    _canBeOverriden: 1
+    _canSpawnNextToItself: 1
+  - _affectedRows:
+    - min: 0
+      max: 0
+    _flagRoomType: 1
+    _spawnChance: 100
+    _canBeOverriden: 0
+    _canSpawnNextToItself: 1
+  - _affectedRows:
+    - min: 9
+      max: 9
+    _flagRoomType: 16
+    _spawnChance: 100
+    _canBeOverriden: 0
+    _canSpawnNextToItself: 1
+  - _affectedRows:
+    - min: 6
+      max: 6
+    _flagRoomType: 8
+    _spawnChance: 100
+    _canBeOverriden: 0
+    _canSpawnNextToItself: 1
+  - _affectedRows:
+    - min: 10
+      max: 10
+    _flagRoomType: 64
+    _spawnChance: 100
+    _canBeOverriden: 0
+    _canSpawnNextToItself: 1
+  - _affectedRows:
+    - min: 0
+      max: 10
+    _flagRoomType: 62
+    _spawnChance: 25
+    _canBeOverriden: 0
+    _canSpawnNextToItself: 0

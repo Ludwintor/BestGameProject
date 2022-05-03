@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b554108308174040b1dd7e96c92d362, type: 3}
   m_Name: Boss
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 5405397178528234592, guid: bbd96c44f99049544b2d7eaf5a397a7e, type: 3}
-  _size: 300
+  _sprite: {fileID: 21300000, guid: 7b3681a8ca000b4499d27f721ef8a246, type: 3}
+  _size: 150
   _radius: 75
-  _spawnRules:
-  - {fileID: 11400000, guid: b68a9753057a2314f82d7c25f3d7c6ac, type: 2}
+  _roomType: 6

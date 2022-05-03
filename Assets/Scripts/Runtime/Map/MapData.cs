@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace ProjectGame.DungeonMap
 {
+    [Obsolete("Use MapConfig instead")]
     [CreateAssetMenu(fileName = "New MapData", menuName = "Game/Map/MapData")]
     public class MapData : ScriptableObject
     {
