@@ -6,11 +6,12 @@ namespace ProjectGame
     [CreateAssetMenu(fileName = "New MapData", menuName = "Game/Map/MapConfig")]
     public partial class MapConfig : ScriptableObject
     {
-        [Header("Dimensions")] [SerializeField]
-        private int _rows = 10;
+        [Header("Dimensions")]
+        [SerializeField] private int _rows = 10;
         [SerializeField] private int _columns = 5;
         
-        [Header("Settings")] [SerializeField] private int _density = 10;
+        [Header("Settings")]
+        [SerializeField] private int _density = 10;
         [SerializeField] private int _maxStartNodeCount = 3;
         [SerializeField] private int _maxAncestorDepth = 4;
         [SerializeField] private RoomData[] _rooms;
@@ -19,7 +20,7 @@ namespace ProjectGame
         public int Rows => _rows;
         public int Columns => _columns;
         public int Density => _density;
-        public int maxStartNodeCount => _maxStartNodeCount;
+        public int MaxStartNodeCount => _maxStartNodeCount;
         public int MaxAncestorDepth => _maxAncestorDepth;
         public RoomData[] Rooms => _rooms;
 
