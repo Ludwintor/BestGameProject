@@ -54,6 +54,8 @@ namespace ProjectGame.Characters
 
         private void OnCardEnterHand(Card card)
         {
+            if (!_targetingSystem.IsTargeting)
+                return;
             _targetingSystem.StopTargeting();
             _handView.ReturnCard(card);
         }

@@ -205,6 +205,7 @@ namespace ProjectGame.Cards
         {
             if (_dragged == null)
                 return;
+            Debug.Log("ENTER HAND");
             CardEnterHand?.Invoke(_dragged);
         }
 
@@ -212,6 +213,7 @@ namespace ProjectGame.Cards
         {
             if (_dragged == null)
                 return;
+            Debug.Log("EXIT HAND");
             CardLeftHand?.Invoke(_dragged);
         }
 
