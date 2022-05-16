@@ -1,5 +1,6 @@
 using ProjectGame.Characters;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ProjectGame
 {
@@ -13,6 +14,11 @@ namespace ProjectGame
         private void Awake()
         {
             Game.RegisterSystem(this);
+        }
+
+        private void Start()
+        {
+            _playerUI.Init(Game.Dungeon.Player);
         }
 
         public Vector3 ScreenToWorld(Vector2 screenPosition)

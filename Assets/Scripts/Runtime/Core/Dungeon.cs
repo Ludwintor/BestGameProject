@@ -18,17 +18,16 @@ namespace ProjectGame
         private RNG _mapRandom;
         private RNG _enemyRandom;
 
+        public Dungeon(Player player)
+        {
+            _player = player;
+        }
+
         public void GenerateDungeon(MapData data)
         {
             _mapRandom = new RNG();
             _enemyRandom = new RNG();
             _map = data.GenerateMap(_mapRandom);
-        }
-
-        // TODO: Instead create player in a ctor
-        public void InitPlayer(Player player)
-        {
-            _player = player;
         }
 
         public void SelectNextRoom()
