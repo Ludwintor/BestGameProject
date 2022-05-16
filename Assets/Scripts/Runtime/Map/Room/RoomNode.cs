@@ -12,8 +12,8 @@ namespace ProjectGame.DungeonMap
         public List<RoomNode> ChildrenNodes { get; }
         public List<RoomNode> ParentNodes { get; }
         public RoomData Data { get; set; }
-        public RoomType roomType { get; set; }
-        public bool _wasVisited { get; private set; }
+        public RoomType RoomType { get; set; }
+        public bool WasVisited { get; private set; }
         public bool HasConnection => ChildrenNodes.Count > 0 || ParentNodes.Count > 0;
         public ReadOnlyCollection<Enemy> Enemies => _enemies.AsReadOnly();
 
@@ -28,7 +28,7 @@ namespace ProjectGame.DungeonMap
 
         public void MarkAsVisited()
         {
-            _wasVisited = true;
+            WasVisited = true;
         }
 
         public RoomNode GetMaxChild() => GetMax(ChildrenNodes);

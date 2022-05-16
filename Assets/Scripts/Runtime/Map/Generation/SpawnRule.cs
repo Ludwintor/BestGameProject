@@ -34,12 +34,12 @@ namespace ProjectGame
 
             foreach (RoomNode parentRoom in room.ParentNodes)
             {
-                if (parentRoom.roomType == roomType) return false;
+                if (parentRoom.RoomType == roomType) return false;
             }
 
             foreach (RoomNode childRoom in room.ChildrenNodes)
             {
-                if (childRoom.roomType == roomType) return false;
+                if (childRoom.RoomType == roomType) return false;
             }
 
             return true;

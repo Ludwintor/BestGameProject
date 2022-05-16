@@ -12,7 +12,6 @@ namespace ProjectGame
     {
         private const string MAP_DATA_PATH = "MapData";
 
-        public static event Action GameStarted;
         public static Dungeon Dungeon => _dungeon;
         public static ObjectPool<CardView> CardsPool => _cardsPool;
 
@@ -51,12 +50,10 @@ namespace ProjectGame
             return (T)_systems[typeof(T)];
         }
 
-        public static void StartGame(PlayerData playerData)
+        public static void StartGame(PlayerData playerData, MapData mapData)
         {
-            MapData[] mapData = Resources.LoadAll<MapData>(MAP_DATA_PATH);
-            _dungeon = new Dungeon(new Player(playerData));
-            _dungeon.GenerateDungeon(mapData[0]);
-            SceneLoader.LoadScene(SceneIndexes.Game, () => GameStarted?.Invoke());
+            _dungeon = new Dungeon(new Player(playerData), mapData);
+            SceneLoader.LoadScene(SceneIndexes.Game);
         }
     }
 }
