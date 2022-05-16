@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectGame
 { 
-    public class SoundButton : MonoBehaviour
+    public class GeneralButton : MonoBehaviour
     {
         [SerializeField] GameObject SoundSettings;
         [SerializeField] GameObject GeneralSettings;
