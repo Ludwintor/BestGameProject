@@ -1,3 +1,5 @@
+using ProjectGame.Characters;
+using ProjectGame.DungeonMap;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +9,8 @@ namespace ProjectGame
     public class MainMenu : MonoBehaviour
     {
         [SerializeField] private Button _startButton;
+        [SerializeField] private PlayerData _selectedPlayer;
+        [SerializeField] private MapData _mapData;
 
         private void Awake()
         {
@@ -15,9 +19,7 @@ namespace ProjectGame
 
         private void OnStartClicked()
         {
-            // TODO: Create own scene manager to load and unload scenes
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
-            SceneManager.LoadSceneAsync((int)SceneIndexes.Game, LoadSceneMode.Additive);
+            Game.StartGame(_selectedPlayer, _mapData);
         }
     }
 }

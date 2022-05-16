@@ -1,3 +1,4 @@
+using System.Collections;
 using ProjectGame.Actions;
 using ProjectGame.Characters;
 using UnityEngine;
@@ -18,6 +19,11 @@ namespace ProjectGame
         {
             Game.RegisterSystem(this);
             _endTurnButton?.onClick.AddListener(OnEndTurnPressed);
+        }
+
+        private void Start()
+        {
+            Game.Dungeon.SelectNextRoom();
         }
 
         public void StartTurn()

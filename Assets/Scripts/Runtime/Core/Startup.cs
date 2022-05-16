@@ -34,9 +34,9 @@ namespace ProjectGame
         public static void LoadScene(SceneIndexes sceneIndex, Action onLoaded = null)
         {
             _onLoaded = onLoaded;
-            SceneManager.LoadSceneAsync((int)sceneIndex, LoadSceneMode.Additive);
             if (_lastLoaded != null)
                 SceneManager.UnloadSceneAsync(_lastLoaded.Value);
+            SceneManager.LoadSceneAsync((int)sceneIndex, LoadSceneMode.Additive);
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)

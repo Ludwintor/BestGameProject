@@ -50,7 +50,7 @@ namespace ProjectGame
 
         private void onMapDirty()
         {
-            if (roomNode._wasVisited)
+            if (roomNode.WasVisited)
             {
                 SetInteractive(false);
                 ColorBlock color = _button.colors;
@@ -61,7 +61,7 @@ namespace ProjectGame
 
                 foreach (RoomNode parentNode in roomNode.ParentNodes)
                 {
-                    if (parentNode._wasVisited)
+                    if (parentNode.WasVisited)
                         foreach (Path path1 in path)
                         {
                             if (path1.start == parentNode)
@@ -94,7 +94,7 @@ namespace ProjectGame
                     SetInteractive(true);
                     foreach (RoomNode parentNode in roomNode.ParentNodes)
                     {
-                        if (parentNode._wasVisited)
+                        if (parentNode.WasVisited)
                             foreach (Path path1 in path)
                             {
                                 if (path1.start == parentNode)

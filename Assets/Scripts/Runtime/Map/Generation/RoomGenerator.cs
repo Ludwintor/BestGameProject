@@ -16,7 +16,7 @@ namespace ProjectGame.DungeonMap
                     {
                         if (spawnRule.SpawnInCell(allRooms[i], roomType, rng))
                         {
-                            allRooms[i].roomType = roomType;
+                            allRooms[i].RoomType = roomType;
                             allRooms[i].Data = FindDataWithType(roomTypes, roomType);
                             if (!spawnRule.CanBeOverriden)
                             {
