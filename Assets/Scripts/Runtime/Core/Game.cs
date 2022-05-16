@@ -1,4 +1,5 @@
 ﻿using ProjectGame.Cards;
+using ProjectGame.Characters;
 using ProjectGame.DungeonMap;
 using ProjectGame.Utils;
 using System;
@@ -11,6 +12,7 @@ namespace ProjectGame
     {
         private const string MAP_DATA_PATH = "MapData";
 
+        public static event Action GameStarted;
         public static Dungeon Dungeon => _dungeon;
         public static ObjectPool<CardView> CardsPool => _cardsPool;
 
@@ -49,11 +51,12 @@ namespace ProjectGame
             return (T)_systems[typeof(T)];
         }
 
-        public static void StartGame()
+        public static void StartGame(PlayerData playerData)
         {
             MapData[] mapData = Resources.LoadAll<MapData>(MAP_DATA_PATH);
-            _dungeon = new Dungeon();
+            _dungeon = new Dungeon(new Player(playerData));
             _dungeon.GenerateDungeon(mapData[0]);
+            SceneLoader.LoadScene(SceneIndexes.Game, () => GameStarted?.Invoke());
         }
     }
 }
