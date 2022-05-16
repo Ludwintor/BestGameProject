@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectGame
 { 
-    public class SoundButton : MonoBehaviour
+    public class GeneralButt : MonoBehaviour
     {
         [SerializeField] GameObject SoundSettings;
         [SerializeField] GameObject GeneralSettings;
@@ -13,8 +13,8 @@ namespace ProjectGame
         //перед этим разобраться, почему он не работает
         public void onClick()
         {
-            SoundSettings.SetActive(true);
-            GeneralSettings.SetActive(false);
+            SoundSettings.SetActive(false);
+            GeneralSettings.SetActive(true);
             GraphicsSettings.SetActive(false);
         }
     }
