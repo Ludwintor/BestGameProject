@@ -18,6 +18,8 @@ namespace ProjectGame.Cards
         public event Action<Card> Dragging;
         public event Action<Card> DragEnd;
         public event Action<Card, bool> Hovered;
+        public event Action<Card> PointerDown;
+        public event Action<Card> PointerUp;
 
         public bool IsDragged => _interaction.IsDragged;
         public bool CanRegainInteraction { get; set; }
@@ -56,6 +58,8 @@ namespace ProjectGame.Cards
             _interaction.DragEnded += OnDragEnded;
             _interaction.PointerEnter += OnPointerEnter;
             _interaction.PointerExit += OnPointerExit;
+            _interaction.PointerDown += OnPointerDown;
+            _interaction.PointerUp += OnPointerUp;
         }
 
         private void OnDisable()
@@ -65,6 +69,8 @@ namespace ProjectGame.Cards
             _interaction.DragEnded -= OnDragEnded;
             _interaction.PointerEnter -= OnPointerEnter;
             _interaction.PointerExit -= OnPointerExit;
+            _interaction.PointerDown -= OnPointerDown;
+            _interaction.PointerUp -= OnPointerUp;
             _moveTween.Kill();
             _rotateTween.Kill();
             _scaleTween.Kill();
@@ -83,6 +89,8 @@ namespace ProjectGame.Cards
         public void UpdateImage(Sprite sprite) => _image.sprite = sprite;
 
         public void StopDrag() => _interaction.StopDrag();
+
+        public void SetDragEnabled(bool value) => _interaction.SetDragEnabled(value);
 
         public void Deactivate()
         {
@@ -153,6 +161,16 @@ namespace ProjectGame.Cards
         private void OnPointerExit(PointerEventData eventData)
         {
             Hovered?.Invoke(_card, false);
+        }
+
+        private void OnPointerDown(PointerEventData eventData)
+        {
+            PointerDown?.Invoke(_card);
+        }
+
+        private void OnPointerUp(PointerEventData eventData)
+        {
+            PointerUp?.Invoke(_card); 
         }
         #endregion
     }
