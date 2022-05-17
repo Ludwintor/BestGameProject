@@ -7,18 +7,21 @@ using UnityEngine.EventSystems;
 namespace ProjectGame.Cards
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public class MouseInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class MouseInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, 
+        IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         public event Action<PointerEventData> DragStarted;
         public event Action<PointerEventData> Dragging;
         public event Action<PointerEventData> DragEnded;
         public event Action<PointerEventData> PointerEnter;
         public event Action<PointerEventData> PointerExit;
-
+        public event Action<PointerEventData> PointerDown;
+        public event Action<PointerEventData> PointerUp;
         public bool Interactable { get => _canvasGroup.blocksRaycasts; set => _canvasGroup.blocksRaycasts = value; }
         public bool IsDragged => _dragging;
 
         private bool _dragging;
+        private bool _dragEnabled = true;
         private CanvasGroup _canvasGroup;
 
         private void Awake()
@@ -31,8 +34,15 @@ namespace ProjectGame.Cards
             _dragging = false;
         }
 
+        public void SetDragEnabled(bool value)
+        {
+            _dragEnabled = value;
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (!_dragEnabled) return;
+            
             _dragging = true;
             _canvasGroup.blocksRaycasts = false;
             DragStarted?.Invoke(eventData);
@@ -40,12 +50,16 @@ namespace ProjectGame.Cards
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (!_dragEnabled) return;
+            
             if (_dragging)
                 Dragging?.Invoke(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (!_dragEnabled) return;
+            
             if (!_dragging)
                 return;
             _dragging = false;
@@ -63,6 +77,16 @@ namespace ProjectGame.Cards
             if (_dragging)
                 return;
             PointerExit?.Invoke(eventData);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            PointerDown?.Invoke(eventData);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            PointerUp?.Invoke(eventData);
         }
     }
 }
