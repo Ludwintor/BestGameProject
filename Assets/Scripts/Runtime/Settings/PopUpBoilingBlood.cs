@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ProjectGame
 {
-    public class PopUpBoilingBlood : MonoBehaviour
+    public class PopUpBoilingBlood : MonoBehaviour, IPointerEnterHandler
     {
         [SerializeField] GameObject Description;
         [SerializeField] GameObject Health;
@@ -26,6 +27,10 @@ namespace ProjectGame
             Cash.SetActive(true);
             Health.SetActive(true);
             Description.SetActive(false);
+        }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

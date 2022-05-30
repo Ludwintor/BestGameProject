@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05dab5dfb15cbe14bb58f50b84fff71b, type: 3}
   m_Name: Strike DamageSingleEffect
   m_EditorClassIdentifier: 
-  _baseDamage: 6
+  _baseDamage: 50
   _additionalDamagePerUpgrade: 2

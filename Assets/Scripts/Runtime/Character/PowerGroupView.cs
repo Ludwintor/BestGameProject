@@ -14,6 +14,7 @@ namespace ProjectGame.Powers
         {
             powergroup.PowerApplied += AddPower;
             powergroup.PowerRemoved += RemovePower;
+            powergroup.PowersCleared += Clear;
         }
 
         private void AddPower(Power power)
@@ -26,7 +27,15 @@ namespace ProjectGame.Powers
         private void RemovePower(Power power)
         {
             PowerView view = Get(power);
+            _powers.Remove(view);
             Destroy(view.gameObject);
+        }
+
+        private void Clear()
+        {
+            foreach (PowerView view in _powers)
+                Destroy(view.gameObject);
+            _powers.Clear();
         }
 
         private PowerView Get(Power power)

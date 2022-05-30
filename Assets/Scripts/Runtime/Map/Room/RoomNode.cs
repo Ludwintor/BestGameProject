@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ProjectGame.Characters;
 using UnityEditorInternal;
@@ -15,9 +16,6 @@ namespace ProjectGame.DungeonMap
         public RoomType RoomType { get; set; }
         public bool WasVisited { get; private set; }
         public bool HasConnection => ChildrenNodes.Count > 0 || ParentNodes.Count > 0;
-        public ReadOnlyCollection<Enemy> Enemies => _enemies.AsReadOnly();
-
-        private List<Enemy> _enemies;
 
         public RoomNode(int x, int y)
         {
@@ -29,6 +27,11 @@ namespace ProjectGame.DungeonMap
         public void MarkAsVisited()
         {
             WasVisited = true;
+        }
+
+        public IEnumerable<EnemyData> GetRandomEnemies(RNG rng)
+        {
+            return Data.GetRandomEnemiesPreset(rng);
         }
 
         public RoomNode GetMaxChild() => GetMax(ChildrenNodes);

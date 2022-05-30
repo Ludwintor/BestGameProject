@@ -26,6 +26,18 @@ namespace ProjectGame
             Game.Dungeon.SelectNextRoom();
         }
 
+        public void StartCombat()
+        {
+            _turns = 0;
+            Game.Dungeon.Player.TriggerCombatStart();
+            StartTurn();
+        }
+
+        public void EndCombat()
+        {
+            Game.Dungeon.Player.TriggerCombatEnd();
+        }
+
         public void StartTurn()
         {
             _turns++;
@@ -42,7 +54,8 @@ namespace ProjectGame
             ActionManager actionManager = Game.GetSystem<ActionManager>();
             dungeon.Player.TriggerEndTurn(_turns);
             foreach (Enemy enemy in dungeon.Enemies)
-                enemy.TriggerEndTurn(_turns); // TODO: Probably (99%) TriggerEndTurn must be called within EnemyTurnAction
+                if (enemy.IsAlive)
+                    enemy.TriggerEndTurn(_turns); // TODO: Probably (99%) TriggerEndTurn must be called within EnemyTurnAction
             Debug.Log("Turn ended");
             actionManager.AddToBottom(new StartTurnAction(this));
         }

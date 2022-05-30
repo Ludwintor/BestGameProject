@@ -19,7 +19,7 @@ namespace ProjectGame
         #region CTORs
         public RNG() : this(Environment.TickCount) { }
 
-        public RNG(string seed) : this(seed.GetHashCode()) { }
+        public RNG(string seed) : this(seed.GetHashCode()) { } // HDNE OEWM 36^8
 
         public RNG(int seed)
         {

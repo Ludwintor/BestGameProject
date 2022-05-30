@@ -33,7 +33,7 @@ namespace ProjectGame.DungeonMap
         {
             foreach (RoomData room in rooms)
             {
-                if (room.roomType == type)
+                if (room.RoomType == type)
                 {
                     return room;
                 }

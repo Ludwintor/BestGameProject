@@ -5,21 +5,27 @@ namespace ProjectGame.Characters
 {
     public class EnemyView : CharacterView
     {
+        public Enemy Enemy => (Enemy)Character;
+
         [SerializeField] private IntentView _intentView;
 
-        private Enemy _enemy;
+        protected override void OnDestroy()
+        {
+            if (Enemy != null)
+                Enemy.IntentDetermined -= ShowIntent;
+            base.OnDestroy();
+        }
 
         public void Init(Enemy enemy)
         {
-            _enemy = enemy;
             base.Init(enemy);
-            _enemy.IntentDetermined += ShowIntent;
+            Enemy.IntentDetermined += ShowIntent;
             UpdateView();
         }
 
         public void ShowIntent(IntentData intent)
         {
-            _intentView.UpdateIntent(intent.Sprite, intent.HasCounter ? intent.GetValue(_enemy).ToString() : "");
+            _intentView.UpdateIntent(intent.Sprite, intent.HasCounter ? intent.GetValue(Enemy).ToString() : "");
             _intentView.Show();
         }
 
@@ -30,8 +36,8 @@ namespace ProjectGame.Characters
 
         private void UpdateView()
         {
-            if (_enemy.CurrentIntent != null)
-                ShowIntent(_enemy.CurrentIntent);
+            if (Enemy.CurrentIntent != null)
+                ShowIntent(Enemy.CurrentIntent);
             else
                 HideIntent();
         }

@@ -12,10 +12,12 @@ namespace ProjectGame.Characters
 
         public event System.Action<int, int> HealthChanged;
         public event System.Action<int> BlockChanged;
+        public event System.Action<Character> Dead;
         public int MaxHealth { get; private set; }
         public int Health { get; private set; }
         public int Block { get; private set; }
         public PowerGroup PowerGroup { get; }
+        public bool IsAlive => Health > 0;
 
         protected ActionManager ActionManager => Game.GetSystem<ActionManager>();
 
@@ -29,6 +31,8 @@ namespace ProjectGame.Characters
 
         public virtual void TriggerStartTurn(int currentTurn) { }
         public virtual void TriggerEndTurn(int currentTurn) { }
+        public virtual void TriggerCombatStart() { }
+        public virtual void TriggerCombatEnd() { }
 
         public virtual void TakeDamage(DamageInfo info)
         {
@@ -40,6 +44,8 @@ namespace ProjectGame.Characters
             Health = Mathf.Clamp(Health, 0, MaxHealth);
             HealthChanged?.Invoke(Health, MaxHealth);
             Debug.Log($"Character took {damage} damage");
+            if (!IsAlive)
+                Dead?.Invoke(this);
         }
 
         public virtual void GainBlock(int block)

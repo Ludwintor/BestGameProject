@@ -12,7 +12,7 @@ namespace ProjectGame.Cards
         public bool IsTargeting => _isTargeting;
 
         private bool _isTargeting;
-        private Card _card;
+        private CardView _cardView;
         private Character _currentTarget;
         private TargetArrow _targetArrow;
         private UIManager _uiManager;
@@ -23,17 +23,17 @@ namespace ProjectGame.Cards
             _uiManager = Game.GetSystem<UIManager>();
         }
 
-        public void BeginTargeting(Card card)
+        public void BeginTargeting(CardView cardView)
         {
-            _card = card;
-            card.View.StopDrag();
+            _cardView = cardView;
+            cardView.StopDrag();
             _isTargeting = true;
-            if (card.NeedTarget)
+            if (_cardView.Card.NeedTarget)
             {
                 _targetArrow.Show();
-                card.View.Interactable = false;
-                card.View.CanRegainInteraction = false;
-                card.View.Move(transform.localPosition, 0.2f);
+                cardView.Interactable = false;
+                cardView.CanRegainInteraction = false;
+                cardView.Move(transform.localPosition, 0.2f);
             }
             StartCoroutine(Targeting());
         }
@@ -41,7 +41,7 @@ namespace ProjectGame.Cards
         public void StopTargeting()
         {
             _targetArrow.Hide();
-            _card = null;
+            _cardView = null;
             _currentTarget = null;
             _isTargeting = false;
         }
@@ -52,11 +52,11 @@ namespace ProjectGame.Cards
             {
                 if (Input.GetMouseButtonDown(1))
                 {
-                    TargetingAborted?.Invoke(_card);
+                    TargetingAborted?.Invoke(_cardView.Card);
                     StopTargeting();
                     break;
                 }
-                if (_card.NeedTarget)
+                if (_cardView.Card.NeedTarget)
                 {
                     _targetArrow.UpdateArrow(transform.position, _uiManager.ScreenToWorld(Input.mousePosition));
                     _currentTarget = RaycastTarget();
@@ -68,11 +68,11 @@ namespace ProjectGame.Cards
                 }
                 else
                 {
-                    _card.View.transform.position = _uiManager.ScreenToWorld(Input.mousePosition);
+                    _cardView.transform.position = _uiManager.ScreenToWorld(Input.mousePosition);
                 }
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
                 {
-                    TargetSelected?.Invoke(_card, _currentTarget);
+                    TargetSelected?.Invoke(_cardView.Card, _currentTarget);
                 }
                 yield return null;
             }

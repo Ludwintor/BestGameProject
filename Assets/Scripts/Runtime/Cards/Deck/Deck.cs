@@ -7,7 +7,7 @@ namespace ProjectGame.Cards
     public class Deck
     {
         public DeckView View { get; set; }
-        public ReadOnlyCollection<Card> Cards => _cards.AsReadOnly();
+        public List<Card> Cards => _cards;
         public int Count => _cards.Count;
 
         private List<Card> _cards;
@@ -22,13 +22,19 @@ namespace ProjectGame.Cards
         public void Add(Card card)
         {
             _cards.Add(card);
-            View.UpdateCount(_cards.Count);
+            View?.UpdateCount(_cards.Count);
         }
 
         public void Remove(Card card)
         {
             _cards.Remove(card);
-            View.UpdateCount(_cards.Count);
+            View?.UpdateCount(_cards.Count);
+        }
+
+        public void Clear()
+        {
+            _cards.Clear();
+            View?.UpdateCount(_cards.Count);
         }
 
         public Card TakeFromTop()

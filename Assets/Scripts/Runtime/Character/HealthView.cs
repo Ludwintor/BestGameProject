@@ -20,8 +20,8 @@ namespace ProjectGame.Characters
 
         public void UpdateBlock(int current)
         {
-            //_blockBar.gameObject.SetActive(current > 0);
-            //_blockText.SetText(current.ToString());
+            _blockBar.gameObject.SetActive(current > 0);
+            _blockText.SetText(current.ToString());
         }
     }
 }

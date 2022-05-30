@@ -9,6 +9,7 @@ namespace ProjectGame.Powers
     {
         public event System.Action<Power> PowerApplied;
         public event System.Action<Power> PowerRemoved;
+        public event System.Action PowersCleared;
         public IList<Power> Powers => _powers.AsReadOnly();
 
         private List<Power> _powers;
@@ -50,6 +51,12 @@ namespace ProjectGame.Powers
             if (power == null)
                 return;
             Remove(power);
+        }
+
+        public void Clear()
+        {
+            _powers.Clear();
+            PowersCleared?.Invoke();
         }
 
         public Power Get(PowerData data)

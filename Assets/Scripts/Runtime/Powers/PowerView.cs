@@ -14,6 +14,12 @@ namespace ProjectGame.Powers
         [SerializeField] private TextMeshProUGUI _powerText;
         private Power _power;
 
+        private void OnDestroy()
+        {
+            if (_power != null)
+                _power.PowerChanged -= ChangePower;
+        }
+
         public void Init(Power power)
         {
             _power = power;
