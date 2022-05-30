@@ -31,7 +31,7 @@ namespace ProjectGame.Utils
 
         public void Clear()
         {
-            if (_onClear == null) 
+            if (_onClear == null)
             {
                 _pool.Clear();
                 return;

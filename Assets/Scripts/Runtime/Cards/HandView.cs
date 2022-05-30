@@ -1,4 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using ProjectGame.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,6 +11,8 @@ namespace ProjectGame.Cards
     public class HandView : MonoBehaviour
     {
         [SerializeField] private RectTransform _container;
+        [SerializeField] private DeckView _drawView;
+        [SerializeField] private DeckView _discardView;
         [Header("Card Alignment")]
         [SerializeField] private float _gapBetweenCards;
         [SerializeField] private float _initialSink;
@@ -23,14 +29,15 @@ namespace ProjectGame.Cards
         [SerializeField] private float _hoverScale;
         [SerializeField] private float _scaleDuration;
 
-        public Card Dragged => _dragged;
-        public Card Hovered => _hovered;
-        public event Action<Card> CardLeftHand;
-        public event Action<Card> CardEnterHand;
+        public CardView Dragged => _dragged;
+        public CardView Hovered => _hovered;
+        public event Action<CardView> CardLeftHand;
+        public event Action<CardView> CardEnterHand;
 
         private Hand _hand;
-        private Card _dragged;
-        private Card _hovered;
+        private List<CardView> _views = new List<CardView>();
+        private CardView _dragged;
+        private CardView _hovered;
         private RectTransform _rectTransform;
         private MouseInteraction _interaction;
 
@@ -55,65 +62,40 @@ namespace ProjectGame.Cards
         public void Init(Hand hand)
         {
             _hand = hand;
-            hand.View = this;
-        }
-
-        public void AttachView(Card card)
-        {
-            CardView cardView = Game.CardsPool.Get();
-            cardView.Init(card);
-            card.View = cardView;
-            card.UpdateVisual();
-            cardView.gameObject.SetActive(true);
-            cardView.transform.SetParent(_container, false);
-            cardView.DragStart += OnCardDragStart;
-            cardView.Dragging += OnCardDragging;
-            cardView.DragEnd += OnCardDragEnd;
-            cardView.Hovered += OnCardHovered;
-        }
-
-        public void DeattachView(Card card)
-        {
-            CardView cardView = card.View;
-            cardView.DragStart -= OnCardDragStart;
-            cardView.Dragging -= OnCardDragging;
-            cardView.DragEnd -= OnCardDragEnd;
-            cardView.Hovered -= OnCardHovered;
-            if (_hovered == card)
-            {
-                _hovered = null;
-                _dragged = null;
-            }
+            _hand.CardDrawn += AttachView;
+            _hand.CardDiscarded += DeattachView;
+            _hand.HandCleared += Clear;
         }
 
         public void ReturnCard(Card card)
         {
-            if (_dragged == card)
+            CardView view = GetView(card);
+            if (_dragged == view)
             {
-                card.View.StopDrag();
+                view.StopDrag();
                 OnCardDragEnd(card);
             }
         }
-
+        
         public void AlignCards()
         {
-            int count = _hand.Count;
-            int hoveredIndex = _hand.Cards.IndexOf(_hovered);
+            int count = _views.Count;
+            int hoveredIndex = _views.IndexOf(_hovered);
             int middleIndex = count / 2; // 0 1 2 3 4     5 ----- 5/2=2 | -2 -1 0 -1 -2          0 1 2 3     4 -------- 4/2=2 | -2 -1 0 -1
             float gapFactor = count > 1 ? 1 - Mathf.Log(count - 1, 150) : 1;
             float finalGap = _gapBetweenCards * gapFactor;
             Vector2 position = (Vector2)_rectTransform.localPosition - new Vector2((count - 1) * finalGap / 2f + finalGap, 0f);
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < _views.Count; i++)
             {
                 position.x += finalGap;
-                CardView cardView = _hand[i].View;
+                CardView cardView = _views[i];
                 cardView.transform.SetSiblingIndex(i);
                 if (cardView.IsDragged)
                     continue;
 
                 float angle = 0f;
                 position.y = _hoveredSink;
-                if (cardView != _hovered?.View)
+                if (cardView != _hovered)
                 {
                     int middleOffset = i - middleIndex;
                     middleOffset += count % 2 == 0 && middleOffset < 0 ? 1 : 0;
@@ -134,15 +116,56 @@ namespace ProjectGame.Cards
                 cardView.Rotate(angle, _rotationDuration);
             }
 
-            _hovered?.View.transform.SetAsLastSibling();
+            if (_hovered != null)
+                _hovered.transform.SetAsLastSibling();
         }
 
         public void ResetCards()
         {
             _hovered = null;
             _dragged = null;
-            foreach (Card card in _hand.Cards)
-                card.View.Interactable = true;
+            foreach (CardView card in _views)
+                card.Interactable = true;
+        }
+
+        private void AttachView(Card card)
+        {
+            CardView cardView = Game.CardsPool.Get();
+            cardView.Init(card);
+            cardView.gameObject.SetActive(true);
+            cardView.transform.SetParent(_container, false);
+            cardView.transform.position = _drawView.transform.position;
+            cardView.DragStart += OnCardDragStart;
+            cardView.Dragging += OnCardDragging;
+            cardView.DragEnd += OnCardDragEnd;
+            cardView.Hovered += OnCardHovered;
+            _views.Add(cardView);
+            AlignCards();
+        }
+
+        private void DeattachView(Card card)
+        {
+            CardView cardView = GetView(card);
+            cardView.DragStart -= OnCardDragStart;
+            cardView.Dragging -= OnCardDragging;
+            cardView.DragEnd -= OnCardDragEnd;
+            cardView.Hovered -= OnCardHovered;
+            if (_hovered == cardView)
+            {
+                _hovered = null;
+                _dragged = null;
+            }
+            _views.Remove(cardView);
+            _discardView.MoveToDeck(cardView);
+            ResetCards();
+            AlignCards();
+        }
+
+        private void Clear()
+        {
+            foreach (CardView view in _views)
+                Game.CardsPool.Release(view);
+            _views.Clear();
         }
 
         private float CalculateSink(int middleOffset)
@@ -159,15 +182,21 @@ namespace ProjectGame.Cards
             return hoveredOffset < 0 ? -push : push;
         }
 
+        private CardView GetView(Card card)
+        {
+            return _views.First(view => view.Card == card);
+        }
+
         private void OnCardDragStart(Card draggedCard)
         {
-            _dragged = draggedCard;
-            foreach (Card card in _hand.Cards)
+            CardView draggedView = GetView(draggedCard);
+            _dragged = draggedView;
+            foreach (CardView view in _views)
             {
-                if (draggedCard == card)
+                if (draggedView == view)
                     continue;
-                card.View.CanRegainInteraction = false;
-                card.View.Interactable = false;
+                view.CanRegainInteraction = false;
+                view.Interactable = false;
             }
             AlignCards();
         }
@@ -180,22 +209,24 @@ namespace ProjectGame.Cards
         private void OnCardDragEnd(Card card)
         {
             ResetCards();
-            card.View.CanRegainInteraction = true;
-            card.View.Interactable = false;
-            card.View.Scale(1f, _scaleDuration);
+            CardView view = GetView(card);
+            view.CanRegainInteraction = true;
+            view.Interactable = false;
+            view.Scale(1f, _scaleDuration);
             AlignCards();
         }
 
         private void OnCardHovered(Card card, bool isHovered)
         {
+            CardView view = GetView(card);
             if (isHovered)
             {
-                _hovered = card;
-                _hovered.View.Scale(_hoverScale, _scaleDuration);
+                _hovered = view;
+                _hovered.Scale(_hoverScale, _scaleDuration);
             }
-            else if (!card.View.IsDragged)
+            else if (!view.IsDragged && _hovered != null)
             {
-                _hovered?.View.Scale(1f, _scaleDuration);
+                _hovered.Scale(1f, _scaleDuration);
                 _hovered = null;
             }
             AlignCards();
@@ -205,7 +236,6 @@ namespace ProjectGame.Cards
         {
             if (_dragged == null)
                 return;
-            Debug.Log("ENTER HAND");
             CardEnterHand?.Invoke(_dragged);
         }
 
@@ -213,7 +243,6 @@ namespace ProjectGame.Cards
         {
             if (_dragged == null)
                 return;
-            Debug.Log("EXIT HAND");
             CardLeftHand?.Invoke(_dragged);
         }
 

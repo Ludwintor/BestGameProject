@@ -20,11 +20,13 @@ namespace ProjectGame.Characters
 
         public Player(PlayerData data) : base(data)
         {
-            Hand = new Hand();
-            MasterDeck = new Deck();
             DrawDeck = new Deck();
             DiscardDeck = new Deck();
+            Hand = new Hand(DrawDeck, DiscardDeck);
+            MasterDeck = new Deck();
             _maxEnergy = data.BaseMaxEnergy;
+            foreach (CardData cardData in data.StartingCards)
+                MasterDeck.Add(new Card(cardData));
         }
 
         public bool CanUseCard(Card card)
@@ -39,23 +41,16 @@ namespace ProjectGame.Characters
             SetEnergy(_energy - card.Cost);
             card.Use(this, target);
             DiscardCard(card);
-            Hand.View.ResetCards();
-            Hand.View.AlignCards();
         }
 
         public void DrawCard()
         {
-            Card card = DrawDeck.TakeFromTop();
-            Hand.Add(card);
-            card.View.transform.position = DrawDeck.View.transform.position;
-            Hand.View.AlignCards();
+            Hand.Draw();
         }
 
         public void DiscardCard(Card card)
         {
-            Hand.Remove(card);
-            DiscardDeck.Add(card);
-            DiscardDeck.View.MoveToDeck(card);
+            Hand.Discard(card);
         }
 
         public void QueueCard(Card card, Character target)
@@ -77,6 +72,21 @@ namespace ProjectGame.Characters
             IReadOnlyList<Card> cards = Hand.Cards;
             for (int i = cards.Count - 1; i >= 0; i--)
                 DiscardCard(cards[i]);
+        }
+
+        public override void TriggerCombatStart()
+        {
+            foreach (Card card in MasterDeck.Cards)
+                DrawDeck.Add(card);
+            DrawDeck.Shuffle();
+        }
+
+        public override void TriggerCombatEnd()
+        {
+            DiscardDeck.Clear();
+            DrawDeck.Clear();
+            Hand.Clear();
+            PowerGroup.Clear();
         }
 
         private void SetEnergy(int energy)

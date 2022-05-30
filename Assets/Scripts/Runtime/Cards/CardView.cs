@@ -12,6 +12,7 @@ using UnityEngine.Events;
 
 namespace ProjectGame.Cards
 {
+    // TODO: [IMPORTANT] REWORK THIS AND "CARD" CLASS TO EXCLUDE TIGHT DEPENDENCY ON VIEW, USE EVENTS INSTEAD
     public class CardView : MonoBehaviour
     {
         public event Action<Card> DragStart;
@@ -21,6 +22,7 @@ namespace ProjectGame.Cards
         public event Action<Card> PointerDown;
         public event Action<Card> PointerUp;
 
+        public Card Card => _card;
         public bool IsDragged => _interaction.IsDragged;
         public bool CanRegainInteraction { get; set; }
         public bool Interactable { get => _interaction.Interactable; set => _interaction.Interactable = value; }
@@ -71,16 +73,22 @@ namespace ProjectGame.Cards
             _interaction.PointerExit -= OnPointerExit;
             _interaction.PointerDown -= OnPointerDown;
             _interaction.PointerUp -= OnPointerUp;
-            _moveTween.Kill();
-            _rotateTween.Kill();
-            _scaleTween.Kill();
+            _moveTween.Kill(true);
+            _rotateTween.Kill(true);
+            _scaleTween.Kill(true);
         }
         #endregion
 
         public void Init(Card card)
         {
+            if (_card != null)
+                _card.CardChanged -= UpdateVisual;
             _card = card;
+            _card.CardChanged += UpdateVisual;
+            _rectTransform.localScale = Vector3.one;
+            _rectTransform.localRotation = Quaternion.identity;
             Interactable = true;
+            UpdateVisual();
         }
 
         public void UpdateName(string name) => _nameText.SetText(name);
@@ -94,11 +102,10 @@ namespace ProjectGame.Cards
 
         public void Deactivate()
         {
-            _moveTween.Pause();
-            _rotateTween.Pause();
-            _scaleTween.Pause();
             _rectTransform.rotation = Quaternion.identity;
             _rectTransform.localScale = Vector3.one;
+            _card.CardChanged -= UpdateVisual;
+            _card = null;
             gameObject.SetActive(false);
         }
 
@@ -133,6 +140,14 @@ namespace ProjectGame.Cards
             if (!CanRegainInteraction)
                 return;
             Interactable = true;
+        }
+
+        private void UpdateVisual()
+        {
+            _nameText.SetText(_card.Name);
+            _descriptionText.SetText(_card.Description);
+            _image.sprite = _card.ForegroundImage;
+            _costText.SetText(_card.Cost.ToString());
         }
 
         #region Mouse Interaction Events

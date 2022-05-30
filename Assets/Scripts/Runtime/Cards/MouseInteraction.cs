@@ -41,7 +41,8 @@ namespace ProjectGame.Cards
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (!_dragEnabled) return;
+            if (!_dragEnabled || eventData.button != PointerEventData.InputButton.Left)
+                return;
             
             _dragging = true;
             _canvasGroup.blocksRaycasts = false;
@@ -50,7 +51,8 @@ namespace ProjectGame.Cards
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!_dragEnabled) return;
+            if (!_dragEnabled)
+                return;
             
             if (_dragging)
                 Dragging?.Invoke(eventData);
@@ -58,7 +60,8 @@ namespace ProjectGame.Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!_dragEnabled) return;
+            if (!_dragEnabled)
+                return;
             
             if (!_dragging)
                 return;
@@ -81,11 +84,15 @@ namespace ProjectGame.Cards
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
             PointerDown?.Invoke(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
             PointerUp?.Invoke(eventData);
         }
     }

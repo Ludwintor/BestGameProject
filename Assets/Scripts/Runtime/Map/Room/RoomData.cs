@@ -1,3 +1,4 @@
+using ProjectGame.Characters;
 using UnityEngine;
 
 namespace ProjectGame
@@ -9,10 +10,24 @@ namespace ProjectGame
         [SerializeField] private float _size;
         [SerializeField] private float _radius;
         [SerializeField] private RoomType _roomType;
+        [SerializeField] private EnemyPresets[] _enemiesPresets;
 
         public Sprite Sprite => _sprite;
         public float Size => _size;
         public float Radius => _radius;
-        public RoomType roomType => _roomType;
+        public RoomType RoomType => _roomType;
+
+        public EnemyData[] GetRandomEnemiesPreset(RNG rng)
+        {
+            return _enemiesPresets[rng.NextInt(0, _enemiesPresets.Length)].Enemies;
+        }
+    }
+
+    [System.Serializable]
+    public class EnemyPresets
+    {
+        public EnemyData[] Enemies => _enemies;
+
+        [SerializeField] private EnemyData[] _enemies;
     }
 }

@@ -1,12 +1,15 @@
 ﻿using ProjectGame.Characters;
 using ProjectGame.Effects;
+using UnityEngine;
 
 namespace ProjectGame.Cards
 {
     public class Card
     {
-        public CardView View { get; set; }
-        public string Name => _data.RawName;
+        public event System.Action CardChanged;
+        public string Name => _data.GetName(_timesUpgraded);
+        public string Description => _data.GetDescription(_timesUpgraded, null);
+        public Sprite ForegroundImage => _data.ForegroundImage;
         public int TimesUpgraded => _timesUpgraded;
         public bool IsUpgraded => _timesUpgraded > 0;
         public bool NeedTarget => _data.NeedTarget;
@@ -30,14 +33,6 @@ namespace ProjectGame.Cards
             {
                 effect.Execute(this, source, target);
             }
-        }
-
-        public void UpdateVisual(Character target = null)
-        {
-            View.UpdateName(_data.GetName(_timesUpgraded));
-            View.UpdateImage(_data.ForegroundImage);
-            View.UpdateCost(Cost.ToString());
-            View.UpdateDescription(_data.GetDescription(_timesUpgraded, target));
         }
     }
 }

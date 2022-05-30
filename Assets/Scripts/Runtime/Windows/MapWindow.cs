@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectGame.Windows
 {
-    public class MapWindow : MonoBehaviour
+    public class MapWindow : Window
     {
         [SerializeField] private RectTransform _container;
         [SerializeField] private RoomNodeView _nodePrefab;
@@ -26,6 +26,10 @@ namespace ProjectGame.Windows
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Hide();
+            }
             if (Input.GetKeyDown(KeyCode.N))
             {
                 Game.Dungeon.SelectNextRoom();
@@ -34,18 +38,13 @@ namespace ProjectGame.Windows
 
         public void Show(Map map)
         {
-            gameObject.SetActive(true);
-            if (map != _map)
+            base.Show();
+            if (_map != map)
             {
                 _map = map;
                 Create();
                 UpdatePaths();
             }
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
 
         public void AllowSelectNextRoom(RoomNode currentRoom, System.Action<RoomNode> callback, bool onlyNeighbours = true)
@@ -98,7 +97,7 @@ namespace ProjectGame.Windows
                     if (!node.HasConnection)
                         continue;
                     Vector2 position = startingPosition + new Vector2(_gapStep, _rowGap) * node.Position;
-                    Vector2 jitter = Vector2.zero;//_rng.NextVector2(_minJitter, _maxJitter);
+                    Vector2 jitter = _rng.NextVector2(_minJitter, _maxJitter);
                     RoomNodeView nodeView = RenderNode(node, position + jitter, _nodeRadius * 2f);
                     foreach (RoomNode child in node.ChildrenNodes)
                     {

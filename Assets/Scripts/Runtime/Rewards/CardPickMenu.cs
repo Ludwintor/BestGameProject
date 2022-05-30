@@ -25,8 +25,6 @@ namespace ProjectGame
             {
                 CardView cardView = Game.CardsPool.Get();
                 cardView.Init(card);
-                card.View = cardView;
-                card.UpdateVisual();
                 cardView.gameObject.SetActive(true);
                 cardView.transform.SetParent(_cardParent, false);
                 cardView.SetDragEnabled(false);
@@ -42,7 +40,7 @@ namespace ProjectGame
                 cardView.PointerDown -= OnClick;
                 Game.CardsPool.Release(cardView);
             }
-
+            _cardViews.Clear();
             _picked(null, false);
         }
         
@@ -53,7 +51,7 @@ namespace ProjectGame
                 cardView.PointerDown -= OnClick;
                 Game.CardsPool.Release(cardView);
             }
-        
+            _cardViews.Clear();
             _picked(card, true);
         }
     }

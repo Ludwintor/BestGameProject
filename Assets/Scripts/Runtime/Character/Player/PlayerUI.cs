@@ -38,13 +38,14 @@ namespace ProjectGame.Characters
             UpdateHealth(_player.Health, _player.MaxHealth); 
         }
 
-        private void OnCardLeftHand(Card card)
+        private void OnCardLeftHand(CardView cardView)
         {
             if (_targetingSystem.IsTargeting)
                 return;
+            Card card = cardView.Card;
             if (_player.CanUseCard(card))
             {
-                _targetingSystem.BeginTargeting(card);
+                _targetingSystem.BeginTargeting(cardView);
             }
             else
             {
@@ -52,12 +53,12 @@ namespace ProjectGame.Characters
             }
         }
 
-        private void OnCardEnterHand(Card card)
+        private void OnCardEnterHand(CardView cardView)
         {
             if (!_targetingSystem.IsTargeting)
                 return;
             _targetingSystem.StopTargeting();
-            _handView.ReturnCard(card);
+            _handView.ReturnCard(cardView.Card);
         }
 
         private void OnTargetSelected(Card card, Character target)

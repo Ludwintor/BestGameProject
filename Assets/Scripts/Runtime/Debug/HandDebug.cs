@@ -12,8 +12,8 @@ namespace ProjectGame
 
         private void Update()
         {
-            _hoveredText.SetText($"Hovered: {_handView.Hovered?.Name ?? "None"}");
-            _draggedText.SetText($"Dragged: {_handView.Dragged?.Name ?? "None"}");
+            _hoveredText.SetText($"Hovered: {_handView.Hovered?.Card.Name ?? "None"}");
+            _draggedText.SetText($"Dragged: {_handView.Dragged?.Card.Name ?? "None"}");
         }
     }
 }
