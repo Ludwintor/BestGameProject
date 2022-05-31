@@ -90,6 +90,6 @@ namespace ProjectGame.Cards
                 Gizmos.DrawLine(_nodes[i - 1].position, _nodes[i].position);
             Gizmos.DrawLine(_nodes[_nodes.Length - 1].position, _head.position);
         }
-    }
 #endif
+    }
 }
