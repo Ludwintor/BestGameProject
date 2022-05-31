@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05dab5dfb15cbe14bb58f50b84fff71b, type: 3}
-  m_Name: Strike DamageSingleEffect
+  m_Script: {fileID: 11500000, guid: 6e55dbe8a84a54e448231afe3ee2dbf1, type: 3}
+  m_Name: TestAttack Intent 2
   m_EditorClassIdentifier: 
-  _baseDamage: 6
-  _additionalDamagePerUpgrade: 2
+  _type: {fileID: 11400000, guid: 707bbda39909e334da84ae68fd1e367a, type: 2}
+  _overrideTypeSprite: {fileID: 0}
+  _baseDamage: 10

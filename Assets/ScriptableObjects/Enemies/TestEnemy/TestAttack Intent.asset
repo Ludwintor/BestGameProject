@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: {fileID: 11400000, guid: 707bbda39909e334da84ae68fd1e367a, type: 2}
   _overrideTypeSprite: {fileID: 0}
-  _baseDamage: 3
+  _baseDamage: 5

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using ProjectGame.Characters;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace ProjectGame.DungeonMap
