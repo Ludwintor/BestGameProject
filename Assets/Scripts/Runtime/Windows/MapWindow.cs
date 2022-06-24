@@ -30,10 +30,6 @@ namespace ProjectGame.Windows
             {
                 Hide();
             }
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                Game.Dungeon.SelectNextRoom();
-            }
         }
 
         public void Show(Map map)
@@ -74,8 +70,9 @@ namespace ProjectGame.Windows
         {
             RoomNodeView view = _roomViews[node.Position];
             view.SetVisitedMarker(true);
-            _roomSelectCallback?.Invoke(node);
+            node.MarkAsVisited();
             UpdatePaths();
+            _roomSelectCallback?.Invoke(node);
         }
 
         private void Create()

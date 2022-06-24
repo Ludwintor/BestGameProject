@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ProjectGame.Cards;
 using UnityEngine;
 
@@ -8,9 +9,9 @@ namespace ProjectGame
     {
         public int chooseCount { get; }
         public Sprite sprite { get; }
-        private Card[] _cards;
+        private IEnumerable<Card> _cards;
         private Card _gainedCard;
-        public CardReward(Sprite sprite, Card[] cards, int chooseCount)
+        public CardReward(Sprite sprite, IEnumerable<Card> cards, int chooseCount)
         {
             _cards = cards;
             this.chooseCount = chooseCount;
@@ -46,8 +47,7 @@ namespace ProjectGame
         public override void Gain(RewardManager rewardManager)
         {
             gained = true;
-            Debug.Log($"Added a card {_gainedCard.Name}");
-            //TODO implement gain
+            Game.Dungeon.Player.MasterDeck.Add(_gainedCard);
             InvokeGained(true);
         }
 

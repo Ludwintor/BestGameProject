@@ -13,13 +13,23 @@ namespace ProjectGame
         private const string MAP_DATA_PATH = "MapData";
 
         public static Dungeon Dungeon => _dungeon;
+        public static CardDatabase CardDatabase => _instance._cardDatabase;
         public static ObjectPool<CardView> CardsPool => _cardsPool;
+
+        private static Game _instance;
 
         private static Dictionary<Type, ISystem> _systems = new Dictionary<Type, ISystem>();
         private static Dungeon _dungeon;
         private static ObjectPool<CardView> _cardsPool;
 
+        [SerializeField] private CardDatabase _cardDatabase;
         [SerializeField] private CardView _cardPrefab;
+        [SerializeField] private Sprite _cardSprite;
+
+        private void Awake()
+        {
+            _instance = this;
+        }
 
         private void Start()
         {
@@ -53,6 +63,7 @@ namespace ProjectGame
         public static void StartGame(PlayerData playerData, MapData mapData)
         {
             _dungeon = new Dungeon(new Player(playerData), mapData);
+            _dungeon.CardSprite = _instance._cardSprite;
             SceneLoader.LoadScene(SceneIndexes.Game);
         }
     }

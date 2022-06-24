@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935765461ce2c7f45b7ca3b0ebbb6eee, type: 3}
+  m_Name: Shield Smash
+  m_EditorClassIdentifier: 
+  _id: shieldSmash
+  _name: Shield Smash
+  _rawDescription: Deal !0D! Damage<br>Gain !1B! Block
+  _foregroundImage: {fileID: 0}
+  _baseCost: 1
+  _upgradedCost: 1
+  _needTarget: 1
+  _effects:
+  - {fileID: 11400000, guid: b093ccef640eded499c35fa53e11b439, type: 2}
+  - {fileID: 11400000, guid: b9752b4c5cc3e8046b8a7900a9d95f00, type: 2}

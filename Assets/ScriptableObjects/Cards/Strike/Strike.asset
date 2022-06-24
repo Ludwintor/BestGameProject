@@ -19,5 +19,6 @@ MonoBehaviour:
   _baseCost: 1
   _upgradedCost: 0
   _needTarget: 1
+  _startingCard: 1
   _effects:
   - {fileID: 11400000, guid: 5b5d34249f59c4547909db4a8f69e864, type: 2}

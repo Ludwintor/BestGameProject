@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProjectGame
@@ -143,6 +144,12 @@ namespace ProjectGame
         {
             float lengthFactor = NextFloat();
             return OnUnitCircle() * lengthFactor;
+        }
+
+        public T NextElement<T>(IList<T> list)
+        {
+            int nextInt = NextInt(list.Count);
+            return list[nextInt];
         }
 
         /// <summary>

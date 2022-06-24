@@ -2,6 +2,7 @@ using ProjectGame.Actions;
 using ProjectGame.Cards;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectGame.Characters
 {
@@ -70,8 +71,8 @@ namespace ProjectGame.Characters
         {
             SetEnergy(0);
             IReadOnlyList<Card> cards = Hand.Cards;
-            for (int i = cards.Count - 1; i >= 0; i--)
-                DiscardCard(cards[i]);
+            while (cards.Count > 0)
+                DiscardCard(cards[^1]);
         }
 
         public override void TriggerCombatStart()

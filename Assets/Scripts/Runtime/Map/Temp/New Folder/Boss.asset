@@ -16,3 +16,6 @@ MonoBehaviour:
   _size: 150
   _radius: 75
   _roomType: 6
+  _enemiesPresets:
+  - _enemies:
+    - {fileID: 11400000, guid: 0aa725c7b77628e43ac5db10c88b6148, type: 2}

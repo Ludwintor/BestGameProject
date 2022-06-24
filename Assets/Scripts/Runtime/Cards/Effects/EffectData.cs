@@ -17,15 +17,15 @@ namespace ProjectGame.Effects
         /// <summary>
         /// Возвращает "сырой" урон эффекта в зависимости от уровня.
         /// </summary>
-        public virtual int GetDamage(int timesUpgraded) => throw new System.NotImplementedException();
+        public virtual int GetDamage(int timesUpgraded) => throw new EffectValueUnsupportedException(GetType());
         /// <summary>
         /// Возвращает "сырой" блок эффекта в зависимости от уровня.
         /// </summary>
-        public virtual int GetBlock(int timesUpgraded) => throw new System.NotImplementedException();
+        public virtual int GetBlock(int timesUpgraded) => throw new EffectValueUnsupportedException(GetType());
         /// <summary>
         /// Возвращает "сырое" дополнительное значение эффекта в зависимости от уровня.
         /// </summary>
-        public virtual int GetMiscValue(int timesUpgraded) => throw new System.NotImplementedException();
+        public virtual int GetMiscValue(int timesUpgraded) => throw new EffectValueUnsupportedException(GetType());
 
         /// <summary>
         /// Добавляет <see cref="Action"/> в начало очереди
@@ -41,6 +41,14 @@ namespace ProjectGame.Effects
         protected void AddToBottom(Action action)
         {
             ActionManager.AddToBottom(action);
+        }
+
+        private class EffectValueUnsupportedException : System.Exception
+        {
+            public EffectValueUnsupportedException(System.Type effectType) : base($"Effect value doesn't exists within {effectType.Name}.")
+            {
+
+            }
         }
     }
 }
