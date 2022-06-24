@@ -56,7 +56,6 @@ namespace ProjectGame
             foreach (Enemy enemy in dungeon.Enemies)
                 if (enemy.IsAlive)
                     enemy.TriggerEndTurn(_turns); // TODO: Probably (99%) TriggerEndTurn must be called within EnemyTurnAction
-            Debug.Log("Turn ended");
             actionManager.AddToBottom(new StartTurnAction(this));
         }
 

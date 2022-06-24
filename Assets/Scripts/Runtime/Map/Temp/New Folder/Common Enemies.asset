@@ -20,9 +20,9 @@ MonoBehaviour:
   - _enemies:
     - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
   - _enemies:
-    - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
-    - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
+    - {fileID: 11400000, guid: 20713ce2acd34ae4fb6878391603c923, type: 2}
+    - {fileID: 11400000, guid: 20713ce2acd34ae4fb6878391603c923, type: 2}
   - _enemies:
-    - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
-    - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
-    - {fileID: 11400000, guid: 91515be9d12f4864fa81fddb30b01a79, type: 2}
+    - {fileID: 11400000, guid: 466ba24ff82613c44ba68e2abf5ca524, type: 2}
+    - {fileID: 11400000, guid: 466ba24ff82613c44ba68e2abf5ca524, type: 2}
+    - {fileID: 11400000, guid: 466ba24ff82613c44ba68e2abf5ca524, type: 2}

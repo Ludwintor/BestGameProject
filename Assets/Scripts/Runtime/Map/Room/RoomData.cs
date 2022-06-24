@@ -10,7 +10,7 @@ namespace ProjectGame
         [SerializeField] private float _size;
         [SerializeField] private float _radius;
         [SerializeField] private RoomType _roomType;
-        [SerializeField] private EnemyPresets[] _enemiesPresets;
+        [SerializeField] private EnemyPreset[] _enemiesPresets;
 
         public Sprite Sprite => _sprite;
         public float Size => _size;
@@ -24,7 +24,7 @@ namespace ProjectGame
     }
 
     [System.Serializable]
-    public class EnemyPresets
+    public class EnemyPreset
     {
         public EnemyData[] Enemies => _enemies;
 

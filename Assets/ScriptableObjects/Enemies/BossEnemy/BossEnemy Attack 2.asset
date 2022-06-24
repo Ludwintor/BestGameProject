@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee105ad1ec89e34587115f75dadf2f6, type: 3}
-  m_Name: TestSequenceEnemy
+  m_Script: {fileID: 11500000, guid: 6e55dbe8a84a54e448231afe3ee2dbf1, type: 3}
+  m_Name: BossEnemy Attack 2
   m_EditorClassIdentifier: 
-  _maxHealth: 50
-  _initialBlock: 0
-  _intents:
-  - {fileID: 11400000, guid: 1ca0c90e3143a01489b0bdc3bb595fb6, type: 2}
+  _type: {fileID: 11400000, guid: 707bbda39909e334da84ae68fd1e367a, type: 2}
+  _overrideTypeSprite: {fileID: 0}
+  _baseDamage: 10

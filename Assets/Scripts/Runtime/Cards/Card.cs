@@ -6,7 +6,7 @@ namespace ProjectGame.Cards
 {
     public class Card
     {
-        public event System.Action CardChanged;
+        public event System.Action<Card> CardChanged;
         public string Name => _data.GetName(_timesUpgraded);
         public string Description => _data.GetDescription(_timesUpgraded, null);
         public Sprite ForegroundImage => _data.ForegroundImage;
@@ -33,6 +33,12 @@ namespace ProjectGame.Cards
             {
                 effect.Execute(this, source, target);
             }
+        }
+
+        public void Upgrade(int timesUpgrade = 1)
+        {
+            _timesUpgraded += timesUpgrade;
+            CardChanged?.Invoke(this);
         }
     }
 }

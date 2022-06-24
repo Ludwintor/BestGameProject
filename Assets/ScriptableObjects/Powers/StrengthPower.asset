@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: strength
   _name: Strength
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 811909f3166993547855c7b12f3b1dd5, type: 3}

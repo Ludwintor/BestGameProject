@@ -21,15 +21,19 @@ namespace ProjectGame.Cards
         public int BaseCost => _baseCost;
         public int UpgradedCost => _upgradedCost;
         public bool NeedTarget => _needTarget;
+        public bool StartingCard => _startingCard;
         public EffectData[] Effects => _effects;
 
         [SerializeField] private string _id;
         [SerializeField] private string _name;
-        [SerializeField, Tooltip(DESCRIPTION_TOOLTIP)] private string _rawDescription;
+        [TextArea]
+        [Tooltip(DESCRIPTION_TOOLTIP)]
+        [SerializeField] private string _rawDescription;
         [SerializeField] private Sprite _foregroundImage;
         [SerializeField] private int _baseCost;
         [SerializeField] private int _upgradedCost;
         [SerializeField] private bool _needTarget;
+        [SerializeField] private bool _startingCard;
         [SerializeField] private EffectData[] _effects;
 
         public string GetName(int timesUpgraded)

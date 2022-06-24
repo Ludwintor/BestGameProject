@@ -43,9 +43,16 @@ namespace ProjectGame.Characters
             Health -= damage - blockedDamage;
             Health = Mathf.Clamp(Health, 0, MaxHealth);
             HealthChanged?.Invoke(Health, MaxHealth);
-            Debug.Log($"Character took {damage} damage");
             if (!IsAlive)
                 Dead?.Invoke(this);
+        }
+
+        public virtual void Heal(int heal)
+        {
+            Debug.Assert(heal >= 0, "Heal must be non-negative");
+            Health += heal;
+            Health = Mathf.Clamp(Health, 0, MaxHealth);
+            HealthChanged?.Invoke(Health, MaxHealth);
         }
 
         public virtual void GainBlock(int block)

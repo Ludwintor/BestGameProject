@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee105ad1ec89e34587115f75dadf2f6, type: 3}
+  m_Name: SpecialEnemy
+  m_EditorClassIdentifier: 
+  _maxHealth: 60
+  _initialBlock: 0
+  _intents:
+  - {fileID: 11400000, guid: 63c0ae3bc141d5d43846e432273634e7, type: 2}
+  - {fileID: 11400000, guid: e291756a11894b047aca5bb1294d617e, type: 2}
+  - {fileID: 11400000, guid: 20410dbd32cf0ed4995b16d189946e5b, type: 2}
+  - {fileID: 11400000, guid: c6ca774fdff1d71408af3098d7b7802a, type: 2}
+  - {fileID: 11400000, guid: b05a34bd4265cb44ba210bf86d12f4af, type: 2}

@@ -88,7 +88,7 @@ namespace ProjectGame.Cards
             _rectTransform.localScale = Vector3.one;
             _rectTransform.localRotation = Quaternion.identity;
             Interactable = true;
-            UpdateVisual();
+            UpdateVisual(card);
         }
 
         public void UpdateName(string name) => _nameText.SetText(name);
@@ -142,12 +142,12 @@ namespace ProjectGame.Cards
             Interactable = true;
         }
 
-        private void UpdateVisual()
+        private void UpdateVisual(Card card)
         {
-            _nameText.SetText(_card.Name);
-            _descriptionText.SetText(_card.Description);
-            _image.sprite = _card.ForegroundImage;
-            _costText.SetText(_card.Cost.ToString());
+            _nameText.SetText(card.Name);
+            _descriptionText.SetText(card.Description);
+            _image.sprite = card.ForegroundImage;
+            _costText.SetText(card.Cost.ToString());
         }
 
         #region Mouse Interaction Events

@@ -7,6 +7,9 @@ namespace ProjectGame
 {
     public class RewardManager : MonoBehaviour, ISystem
     {
+        public event Action<RewardManager> AllRewardsGained;
+
+        [SerializeField] private RectTransform _container;
         [SerializeField] private GameObject _rewardMenuPrefab;
         private RewardMenu _allRewardsSubMenu;
         private CardPickMenu _cardPickSubMenu;
@@ -15,9 +18,10 @@ namespace ProjectGame
 
         private readonly List<Reward> _rewards = new List<Reward>();
         private bool _menuOpened;
+
         private void Awake()
         {
-            _rewardMenu = Instantiate(_rewardMenuPrefab, transform);
+            _rewardMenu = Instantiate(_rewardMenuPrefab, _container);
             _allRewardsSubMenu = _rewardMenu.GetComponentInChildren<RewardMenu>(true);
             _cardPickSubMenu = _rewardMenu.GetComponentInChildren<CardPickMenu>(true);
             CloseMenu();
@@ -48,6 +52,7 @@ namespace ProjectGame
         public void DiscardAllRewards()
         {
             _rewards.Clear();
+            AllRewardsGained?.Invoke(this);
             CloseMenu();
         }
         
@@ -67,6 +72,7 @@ namespace ProjectGame
 
             if (_rewards.Count == 0)
             {
+                AllRewardsGained?.Invoke(this);
                 CloseMenu();
             }
             else

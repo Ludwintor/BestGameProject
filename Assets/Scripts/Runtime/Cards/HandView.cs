@@ -132,6 +132,7 @@ namespace ProjectGame.Cards
         {
             CardView cardView = Game.CardsPool.Get();
             cardView.Init(card);
+            cardView.SetDragEnabled(true);
             cardView.gameObject.SetActive(true);
             cardView.transform.SetParent(_container, false);
             cardView.transform.position = _drawView.transform.position;
@@ -164,7 +165,13 @@ namespace ProjectGame.Cards
         private void Clear()
         {
             foreach (CardView view in _views)
+            {
+                view.DragStart -= OnCardDragStart;
+                view.Dragging -= OnCardDragging;
+                view.DragEnd -= OnCardDragEnd;
+                view.Hovered -= OnCardHovered;
                 Game.CardsPool.Release(view);
+            }
             _views.Clear();
         }
 

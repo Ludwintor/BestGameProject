@@ -196,7 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dad8912713f37844b4ff2e950667683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardDatabase: {fileID: 11400000, guid: 85def9ace4238cf4083fd88d47569e39, type: 2}
   _cardPrefab: {fileID: 6866970746398992657, guid: 3732035216262e84c9121021fafc3af2, type: 3}
+  _cardSprite: {fileID: 21300000, guid: 610f09312d05aa344a6949dc89934587, type: 3}
 --- !u!4 &1890199019
 Transform:
   m_ObjectHideFlags: 0

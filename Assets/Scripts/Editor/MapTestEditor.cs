@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ProjectGame
 {
     [CustomEditor(typeof(MapTest))]
-    public class MapTestEditor : Editor
+    public class MapTestEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
